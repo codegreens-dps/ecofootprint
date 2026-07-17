@@ -1,7 +1,8 @@
 // ==========================================
 // SDG WEBATHON - JAVASCRIPT LOGIC
 // getting this to work took like 4 hours no cap
-// Update: Added LocalStorage so the judges think we know backend stuff 🧠
+// Update 1: Added LocalStorage so the judges think we know backend stuff 🧠
+// Update 2: Added a sick number counter animation for maximum flex 🔥
 // ==========================================
 
 // SECRET EASTER EGG FOR THE JUDGES 👀
@@ -64,12 +65,26 @@ document.getElementById('footprintForm').addEventListener('submit', function(eve
     }
 
     // Push the updated text and emoji to the HTML
-    scoreDisplay.innerHTML = totalScore;
     resultEmoji.innerHTML = emoji;
 
     // Unhiding the box completely so they can see their custom feedback
     document.getElementById('footprintForm').style.display = 'none';
     resultBox.style.display = "block";
+
+    // 🔥 THE ULTIMATE FLEX: ANIMATED NUMBER COUNTER 🔥
+    // Makes the score count up rapidly from 0 instead of just appearing
+    let currentCount = 0;
+    scoreDisplay.innerHTML = "0"; // Start at 0
+    
+    let counterInterval = setInterval(() => {
+        if (currentCount >= totalScore) {
+            clearInterval(counterInterval);
+            scoreDisplay.innerHTML = totalScore; // Make sure it ends on the exact number
+        } else {
+            currentCount += 1;
+            scoreDisplay.innerHTML = currentCount;
+        }
+    }, 30); // Speed of the counting (30ms per number)
 
     // Animating the progress bar! (using a tiny timeout so the CSS animation actually triggers)
     setTimeout(() => {
@@ -84,6 +99,9 @@ document.getElementById('footprintForm').addEventListener('submit', function(eve
 function resetQuiz() {
     // clears the dropdowns
     document.getElementById("footprintForm").reset();
+    
+    // resets the score display back to 0
+    document.getElementById("scoreDisplay").innerHTML = "0";
     
     // resets the bar width back to zero so it can re-animate next time
     document.getElementById("scoreBarFill").style.width = "0%";
