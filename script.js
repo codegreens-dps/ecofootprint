@@ -4,7 +4,6 @@
 // ==========================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js";
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, updateDoc, doc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 // our database config
@@ -157,7 +156,7 @@ document.getElementById('addItemForm').addEventListener('submit', async function
 });
 
 // UPDATING DATA: When someone clicks Claim
-async function claimItem(docId) {
+window.claimItem = async (docId) => {
     let btn = document.getElementById("btn-" + docId);
     btn.innerHTML = "WAIT... ⏳";
     btn.disabled = true;
@@ -168,26 +167,22 @@ async function claimItem(docId) {
         await updateDoc(itemRef, {
             status: "claimed"
         });
-
+        
         alert("♻️ Claimed! The board is syncing for everyone else now.");
 
     } catch (err) {
-        console.error("Claim failed:", err);
-        alert("Error claiming item.");
+        console.error("Bro, the claim failed. Error: ", err);
+        alert("Error! Did you update your Firebase Rules? Check the console log.");
         btn.innerHTML = "CLAIM FOR FREE";
         btn.disabled = false;
     }
-}
+};
 
-function resetQuiz() {
+window.resetQuiz = () => {
     document.getElementById("footprintForm").reset();
     document.getElementById("scoreDisplay").innerHTML = "0";
     document.getElementById("scoreBarFill").style.width = "0%";
     document.getElementById("resultBox").style.display = "none";
     document.getElementById("footprintForm").style.display = "block";
     document.getElementById('quiz').scrollIntoView({ behavior: 'smooth' });
-}
-
-// Attach to window so HTML buttons can trigger them
-window.claimItem = claimItem;
-window.resetQuiz = resetQuiz;
+};
