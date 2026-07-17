@@ -1,13 +1,8 @@
-// ==========================================
-// SDG WEBATHON - JAVASCRIPT LOGIC
-// Real-time Firebase Sync setup 
-// Update: Claim feature now has custom celebration UX 
-// ==========================================
-
+// firebase imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, updateDoc, doc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-// our database config
+// DO NOT TOUCH THIS CONFIG
 const firebaseConfig = {
     apiKey: "AIzaSyBNO8SiOBW49CqL7YgHd572pF9mikE7ABo",
     authDomain: "ecofootprint-9c4ed.firebaseapp.com",
@@ -18,125 +13,122 @@ const firebaseConfig = {
     measurementId: "G-NCNFZTHKS4"
 };
 
-// boot up firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// ==========================================
-// 1. POLICY SIMULATOR LOGIC
-// ==========================================
+// --- QUIZ LOGIC ---
 document.getElementById('footprintForm').addEventListener('submit', async function(e) {
-    e.preventDefault(); 
+    e.preventDefault(); // stops page from refreshing
 
-    let ans1 = Number(document.getElementById("q1").value);
-    let ans2 = Number(document.getElementById("q2").value);
-    let ans3 = Number(document.getElementById("q3").value);
-    let ans4 = Number(document.getElementById("q4").value);
-    let ans5 = Number(document.getElementById("q5").value);
+    let val1 = Number(document.getElementById("q1").value);
+    let val2 = Number(document.getElementById("q2").value);
+    let val3 = Number(document.getElementById("q3").value);
+    let val4 = Number(document.getElementById("q4").value);
+    let val5 = Number(document.getElementById("q5").value);
     
-    let finalPoints = ans1 + ans2 + ans3 + ans4 + ans5;
+    let total = val1 + val2 + val3 + val4 + val5;
 
-    // SENDING DATA: Save the score to the cloud
+    // save it to cloud
     try {
         await addDoc(collection(db, "simulatorScores"), {
-            score: finalPoints,
+            score: total,
             timeSaved: new Date().toISOString()
         });
     } catch (err) {
-        console.log("DB error: ", err);
+        console.log("firebase error: ", err);
     }
 
-    let feedbackBox = document.getElementById("feedbackText");
-    let uiEmoji = "";
-    let barHex = "";
+    let feedback = document.getElementById("feedbackText");
+    let emoji = "";
+    let barColor = "";
 
-    if (finalPoints >= 80) {
-        uiEmoji = "🌍🏆";
-        barHex = "#2ecc71"; // green
-        feedbackBox.innerHTML = "🔥 INCREDIBLE! You implemented a true sustainable framework. By shifting to renewables and enforcing a circular economy, we can reach Net-Zero!";
-        feedbackBox.style.color = "#27ae60"; 
-    } else if (finalPoints >= 40 && finalPoints < 80) {
-        uiEmoji = "⚠️📉";
-        barHex = "#ffeb3b"; // yellow
-        feedbackBox.innerHTML = "🌱 A GOOD START. But half-measures like EVs aren't enough. We need systemic shifts in agriculture and public transit. Try again!";
-        feedbackBox.style.color = "#d35400"; 
+    // set up the ui based on score
+    if (total >= 80) {
+        emoji = "🌍🏆";
+        barColor = "#2ecc71"; // green
+        feedback.innerHTML = "🔥 INCREDIBLE! You implemented a true sustainable framework. By shifting to renewables and enforcing a circular economy, we can reach Net-Zero!";
+        feedback.style.color = "#27ae60"; 
+    } else if (total >= 40 && total < 80) {
+        emoji = "⚠️📉";
+        barColor = "#ffeb3b"; // yellow
+        feedback.innerHTML = "🌱 A GOOD START. But half-measures like EVs aren't enough. We need systemic shifts in agriculture and public transit. Try again!";
+        feedback.style.color = "#d35400"; 
     } else {
-        uiEmoji = "🏭❌";
-        barHex = "#ff5252"; // red
-        feedbackBox.innerHTML = "🚨 DISASTER. Continuing the status quo guarantees severe global warming. We need radical policy shifts immediately.";
-        feedbackBox.style.color = "#c0392b"; 
+        emoji = "🏭❌";
+        barColor = "#ff5252"; // red
+        feedback.innerHTML = "🚨 DISASTER. Continuing the status quo guarantees severe global warming. We need radical policy shifts immediately.";
+        feedback.style.color = "#c0392b"; 
     }
 
-    document.getElementById("resultEmoji").innerHTML = uiEmoji;
+    document.getElementById("resultEmoji").innerHTML = emoji;
     document.getElementById('footprintForm').style.display = 'none';
     document.getElementById("resultBox").style.display = "block";
 
-    // cool counting animation
-    let tally = 0;
-    document.getElementById("scoreDisplay").innerHTML = "0"; 
+    // counter animation
+    let count = 0;
+    document.getElementById("scoreText").innerHTML = "0"; 
     
     let timer = setInterval(() => {
-        if (tally >= finalPoints) {
+        if (count >= total) {
             clearInterval(timer);
-            document.getElementById("scoreDisplay").innerHTML = finalPoints; 
+            document.getElementById("scoreText").innerHTML = total; 
         } else {
-            tally++;
-            document.getElementById("scoreDisplay").innerHTML = tally;
+            count++;
+            document.getElementById("scoreText").innerHTML = count;
         }
     }, 20); 
 
+    // fill the progress bar
     setTimeout(() => {
-        document.getElementById("scoreBarFill").style.width = finalPoints + "%";
-        document.getElementById("scoreBarFill").style.backgroundColor = barHex;
+        document.getElementById("barFill").style.width = total + "%";
+        document.getElementById("barFill").style.backgroundColor = barColor;
     }, 100);
 });
 
-// ==========================================
-// 2. REAL-TIME DATABASE SYNC (GIVE & TAKE)
-// ==========================================
+// --- THE LIVE BOARD LOGIC ---
+const boardRef = collection(db, "listedItems");
+const q = query(boardRef, orderBy("timestamp", "desc"));
 
-const boardDb = collection(db, "listedItems");
-const sortQuery = query(boardDb, orderBy("timestamp", "desc"));
-
-// GIVING DATA (REAL-TIME READ): This listens to Firestore 24/7.
-onSnapshot(sortQuery, (snapshot) => {
-    let htmlContainer = document.getElementById('give-take-cards');
-    htmlContainer.innerHTML = ""; // clear old stuff
+// listen for database changes instantly
+onSnapshot(q, (snapshot) => {
+    let boardHTML = document.getElementById('live-board');
+    boardHTML.innerHTML = ""; // clear old stuff
     
-    let availableItemsCount = 0; 
+    let activeItems = 0; 
 
     snapshot.forEach((docSnap) => {
-        let itemData = docSnap.data();
-        let docId = docSnap.id; 
+        let item = docSnap.data();
+        let id = docSnap.id; 
 
-        if (itemData.status === "claimed") {
+        // if it's already claimed, ignore it
+        if (item.status === "claimed") {
             return; 
         }
 
-        availableItemsCount++; 
+        activeItems++; 
 
         let makeCard = `
-            <div class="item-card" id="card-${docId}">
-                <div class="card-icon">${itemData.icon}</div>
-                <h3>${itemData.name}</h3>
-                <p class="item-lister">Listed by: ${itemData.lister}</p>
-                <p>${itemData.description}</p>
-                <button class="claim-btn" id="btn-${docId}" onclick="claimItem('${docId}')">CLAIM FOR FREE</button>
+            <div class="item-card" id="card-${id}">
+                <div class="card-icon">${item.icon}</div>
+                <h3>${item.name}</h3>
+                <p class="lister-name">Listed by: ${item.lister}</p>
+                <p>${item.description}</p>
+                <button class="grab-btn" id="btn-${id}" onclick="claimItem('${id}')">CLAIM FOR FREE</button>
             </div>
         `;
-        htmlContainer.insertAdjacentHTML('beforeend', makeCard);
+        boardHTML.insertAdjacentHTML('beforeend', makeCard);
     });
     
-    if (availableItemsCount === 0) {
-        htmlContainer.innerHTML = "<h3 style='width:100%; text-align:center; color:#555;'>No items available right now. Be the first to list something! ♻️</h3>";
+    if (activeItems === 0) {
+        boardHTML.innerHTML = "<h3 style='width:100%; text-align:center; color:#555;'>No items available right now. Be the first to list something! ♻️</h3>";
     }
 });
 
-// SENDING DATA: When someone lists a new item
+// adding a new item
 document.getElementById('addItemForm').addEventListener('submit', async function(e) {
     e.preventDefault(); 
 
-    let formBtn = document.querySelector(".add-btn");
+    let formBtn = document.querySelector(".post-btn");
     formBtn.innerHTML = "LISTING... ⏳";
     
     try {
@@ -153,72 +145,71 @@ document.getElementById('addItemForm').addEventListener('submit', async function
         document.getElementById('addItemForm').reset();
 
     } catch (err) {
-        console.error("DB Upload Failed: ", err);
+        console.error("error uploading: ", err);
         alert("Network error.");
     } finally {
         formBtn.innerHTML = "LIST ITEM SECURELY 🔒";
     }
 });
 
-// UPDATING DATA: Claim an item (REFINED UX)
-window.claimItem = async (docId) => {
-    // Ask for identity
-    let claimerName = prompt("♻️ Awesome! Enter your name & class so the owner knows who to give it to:");
+// clicking claim on an item
+window.claimItem = async (id) => {
+    let userName = prompt("♻️ Awesome! Enter your name & class so the owner knows who to give it to:");
 
-    // Stop if they hit cancel
-    if (!claimerName || claimerName.trim() === "") {
+    // if they click cancel
+    if (!userName || userName.trim() === "") {
         return; 
     }
 
-    let card = document.getElementById("card-" + docId);
-    let btn = document.getElementById("btn-" + docId);
+    let cardDiv = document.getElementById("card-" + id);
+    let claimBtn = document.getElementById("btn-" + id);
 
-    // CELEBRATION STATE (Change UI instantly)
-    if(btn) {
-        btn.innerHTML = "🎉 CLAIMED BY " + claimerName.toUpperCase() + "!";
-        btn.style.backgroundColor = "#2ecc71"; // Bright green
-        btn.style.color = "#fff";
-        btn.disabled = true;
+    // change UI instantly so it feels fast
+    if(claimBtn) {
+        claimBtn.innerHTML = "🎉 CLAIMED BY " + userName.toUpperCase() + "!";
+        claimBtn.style.backgroundColor = "#2ecc71"; 
+        claimBtn.style.color = "#fff";
+        claimBtn.disabled = true;
     }
 
-    if(card) {
-        card.style.borderColor = "#2ecc71";
-        card.style.boxShadow = "8px 8px 0px #2ecc71";
+    if(cardDiv) {
+        cardDiv.style.borderColor = "#2ecc71";
+        cardDiv.style.boxShadow = "8px 8px 0px #2ecc71";
     }
 
-    // Let them enjoy the victory for 1.5 seconds, then fade it out
+    // fade it out after 1.5s
     setTimeout(async () => {
         
-        if (card) {
-            card.style.opacity = "0";
-            card.style.transform = "scale(0.9) translateY(20px)";
+        if (cardDiv) {
+            cardDiv.style.opacity = "0";
+            cardDiv.style.transform = "scale(0.9) translateY(20px)";
         }
 
         setTimeout(async () => {
             try {
-                // Update cloud
-                const itemRef = doc(db, "listedItems", docId);
-                await updateDoc(itemRef, {
+                // tell firebase it was claimed
+                const itemDoc = doc(db, "listedItems", id);
+                await updateDoc(itemDoc, {
                     status: "claimed",
-                    claimedBy: claimerName
+                    claimedBy: userName
                 });
                 
             } catch (err) {
-                console.error("DB Error: ", err);
-                alert("🚨 ERROR: Firebase connection failed! Check console.");
+                console.log("Firebase error: ", err);
+                alert("🚨 ERROR: Connection failed! Check console.");
                 
-                // Revert if database fails
-                if(btn) {
-                    btn.innerHTML = "CLAIM FOR FREE";
-                    btn.style.backgroundColor = "#ffeb3b";
-                    btn.style.color = "#000";
-                    btn.disabled = false;
+                // bring it back if it failed
+                if(claimBtn) {
+                    claimBtn.innerHTML = "CLAIM FOR FREE";
+                    claimBtn.style.backgroundColor = "#ffeb3b";
+                    claimBtn.style.color = "#000";
+                    claimBtn.disabled = false;
                 }
-                if(card) {
-                    card.style.borderColor = "#000";
-                    card.style.boxShadow = "8px 8px 0px #ffeb3b";
-                    card.style.opacity = "1";
-                    card.style.transform = "none";
+                if(cardDiv) {
+                    cardDiv.style.borderColor = "#000";
+                    cardDiv.style.boxShadow = "8px 8px 0px #ffeb3b";
+                    cardDiv.style.opacity = "1";
+                    cardDiv.style.transform = "none";
                 }
             }
         }, 300);
@@ -226,11 +217,12 @@ window.claimItem = async (docId) => {
     }, 1500); 
 };
 
+// reset button function
 window.resetQuiz = () => {
     document.getElementById("footprintForm").reset();
-    document.getElementById("scoreDisplay").innerHTML = "0";
-    document.getElementById("scoreBarFill").style.width = "0%";
+    document.getElementById("scoreText").innerHTML = "0";
+    document.getElementById("barFill").style.width = "0%";
     document.getElementById("resultBox").style.display = "none";
     document.getElementById("footprintForm").style.display = "block";
-    document.getElementById('quiz').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('sim-area').scrollIntoView({ behavior: 'smooth' });
 };
