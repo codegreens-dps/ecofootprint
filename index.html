@@ -128,14 +128,13 @@
         <!-- GIVE AND TAKE BOARD SECTION -->
         <section id="give-take" class="give-take-section">
             <h2 class="section-title">♻️ The Give & Take Board ♻️</h2>
-            <p class="board-subtitle">Circular economy in action! List items you don't need, or claim stuff for free. Zero waste, zero cost.</p>
+            <p class="board-subtitle">Circular economy in action! List items you don't need, or claim stuff for free. Syncs live globally.</p>
             
-            <!-- NEW: FORM TO LIST YOUR OWN ITEM -->
             <div class="add-item-box">
                 <h3>List a New Item 📦</h3>
                 <form id="addItemForm">
                     <div class="input-row">
-                        <input type="text" id="newItemName" placeholder="What are you giving away? (e.g. Bio Textbook)" required>
+                        <input type="text" id="newItemName" placeholder="What are you giving away?" required>
                         <select id="newItemIcon" required>
                             <option value="" disabled selected>Select Icon</option>
                             <option value="📚">📚 Books/Notes</option>
@@ -145,38 +144,22 @@
                             <option value="💻">💻 Tech/Cables</option>
                         </select>
                     </div>
-                    <input type="text" id="newListerName" placeholder="Your Name & Class (e.g. Aman, 9B)" required>
+                    <input type="text" id="newListerName" placeholder="Your Name & Class" required>
                     <textarea id="newItemDesc" rows="2" placeholder="Describe the condition..." required></textarea>
                     <button type="submit" class="add-btn">LIST ITEM SECURELY 🔒</button>
                 </form>
             </div>
 
-            <!-- JS WILL INJECT NEW ITEMS HERE -->
+            <!-- FIREBASE REALTIME SYNC CONTAINER -->
             <div class="cards-container" id="give-take-cards">
-                <!-- Hardcoded Item 1 -->
-                <div class="item-card" id="card-item-1">
-                    <div class="card-icon">📚</div>
-                    <h3>Grade 9 Math Textbook</h3>
-                    <p class="item-lister">Listed by: Rahul (Class 10)</p>
-                    <p>Barely used. Has some doodles on page 42, but otherwise perfect condition.</p>
-                    <button class="claim-btn" id="btn-item-1" onclick="claimItem('item-1')">CLAIM FOR FREE</button>
-                </div>
-
-                <!-- Hardcoded Item 2 -->
-                <div class="item-card" id="card-item-2">
-                    <div class="card-icon">👕</div>
-                    <h3>School Blazer (Size M)</h3>
-                    <p class="item-lister">Listed by: Aman (Class 11)</p>
-                    <p>Washed, dry-cleaned, and ready to go. Stop buying fast fashion!</p>
-                    <button class="claim-btn" id="btn-item-2" onclick="claimItem('item-2')">CLAIM FOR FREE</button>
-                </div>
+                <h3 style="width:100%; text-align:center; color:#555;">📡 Syncing live items from the cloud...</h3>
             </div>
         </section>
 
         <!-- ABOUT SECTION -->
         <section id="about" class="about-section">
             <h2>Who Made This 🤜🤛</h2>
-            <p>Built for the 2026 webathon by two 9th graders promoting real, evidence-based climate action and circular economies.</p>
+            <p>Built for the 2026 webathon by two 9th graders promoting real, evidence-based climate action.</p>
         </section>
     </main>
 
