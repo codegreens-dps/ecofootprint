@@ -17,7 +17,6 @@
         <nav>
             <a href="#hero">Overview</a>
             <a href="#quiz">Policy Simulator</a>
-            <!-- bro added the Give & Take link here -->
             <a href="#give-take">Give & Take</a>
             <a href="#about">The Devs</a>
         </nav>
@@ -55,7 +54,7 @@
             </div>
         </section>
 
-        <!-- COMMAND TERMINAL SECTION (Fully Realistic Solutions) -->
+        <!-- COMMAND TERMINAL SECTION -->
         <section id="quiz" class="quiz-section">
             <h2 class="section-title">⚡ Policy Deployment Simulator ⚡</h2>
             
@@ -127,13 +126,34 @@
         </section>
 
         <!-- GIVE AND TAKE BOARD SECTION -->
-        <!-- this right here is the golden ticket to 1st place -->
         <section id="give-take" class="give-take-section">
             <h2 class="section-title">♻️ The Give & Take Board ♻️</h2>
-            <p class="board-subtitle">Circular economy in action! Older students list textbooks, uniforms, or art supplies they no longer need. Younger students claim them for free. Zero waste, zero cost.</p>
+            <p class="board-subtitle">Circular economy in action! List items you don't need, or claim stuff for free. Zero waste, zero cost.</p>
             
-            <div class="cards-container">
-                <!-- Item 1 -->
+            <!-- NEW: FORM TO LIST YOUR OWN ITEM -->
+            <div class="add-item-box">
+                <h3>List a New Item 📦</h3>
+                <form id="addItemForm">
+                    <div class="input-row">
+                        <input type="text" id="newItemName" placeholder="What are you giving away? (e.g. Bio Textbook)" required>
+                        <select id="newItemIcon" required>
+                            <option value="" disabled selected>Select Icon</option>
+                            <option value="📚">📚 Books/Notes</option>
+                            <option value="👕">👕 Uniforms/Clothes</option>
+                            <option value="🎨">🎨 Art/Supplies</option>
+                            <option value="⚽">⚽ Sports Gear</option>
+                            <option value="💻">💻 Tech/Cables</option>
+                        </select>
+                    </div>
+                    <input type="text" id="newListerName" placeholder="Your Name & Class (e.g. Aman, 9B)" required>
+                    <textarea id="newItemDesc" rows="2" placeholder="Describe the condition..." required></textarea>
+                    <button type="submit" class="add-btn">LIST ITEM SECURELY 🔒</button>
+                </form>
+            </div>
+
+            <!-- JS WILL INJECT NEW ITEMS HERE -->
+            <div class="cards-container" id="give-take-cards">
+                <!-- Hardcoded Item 1 -->
                 <div class="item-card" id="card-item-1">
                     <div class="card-icon">📚</div>
                     <h3>Grade 9 Math Textbook</h3>
@@ -142,22 +162,13 @@
                     <button class="claim-btn" id="btn-item-1" onclick="claimItem('item-1')">CLAIM FOR FREE</button>
                 </div>
 
-                <!-- Item 2 -->
+                <!-- Hardcoded Item 2 -->
                 <div class="item-card" id="card-item-2">
                     <div class="card-icon">👕</div>
                     <h3>School Blazer (Size M)</h3>
                     <p class="item-lister">Listed by: Aman (Class 11)</p>
                     <p>Washed, dry-cleaned, and ready to go. Stop buying fast fashion!</p>
                     <button class="claim-btn" id="btn-item-2" onclick="claimItem('item-2')">CLAIM FOR FREE</button>
-                </div>
-
-                <!-- Item 3 -->
-                <div class="item-card" id="card-item-3">
-                    <div class="card-icon">🎨</div>
-                    <h3>Acrylic Paint Set</h3>
-                    <p class="item-lister">Listed by: Priya (Class 12)</p>
-                    <p>Only used for one art project. 8 full tubes of color left. Go crazy!</p>
-                    <button class="claim-btn" id="btn-item-3" onclick="claimItem('item-3')">CLAIM FOR FREE</button>
                 </div>
             </div>
         </section>
@@ -174,8 +185,7 @@
         <p>© 2026 Team CodeGreens. Action today for a sustainable tomorrow. 🌍</p>
     </footer>
 
-<!-- NEW SCRIPT TAG (Added type="module") -->
+    <!-- Firebase requires type="module" -->
     <script type="module" src="script.js"></script>
-</body>
 </body>
 </html>
