@@ -1,6 +1,7 @@
 // ==========================================
 // SDG WEBATHON - JAVASCRIPT LOGIC
 // Real-time Firebase Sync setup 
+// Update: Claimed items now instantly VANISH from the board! 💨
 // ==========================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
@@ -98,32 +99,40 @@ const boardDb = collection(db, "listedItems");
 const sortQuery = query(boardDb, orderBy("timestamp", "desc"));
 
 // GIVING DATA (REAL-TIME READ): This listens to Firestore 24/7.
-// If anyone adds or claims an item, this runs instantly for everyone!
 onSnapshot(sortQuery, (snapshot) => {
     let htmlContainer = document.getElementById('give-take-cards');
     htmlContainer.innerHTML = ""; // clear old stuff
+    
+    let availableItemsCount = 0; // keep track to see if board is empty
 
     snapshot.forEach((docSnap) => {
         let itemData = docSnap.data();
         let docId = docSnap.id; 
 
-        let taken = itemData.status === "claimed";
-        let buttonText = taken ? "CLAIMED ❌" : "CLAIM FOR FREE";
-        let disabledState = taken ? "disabled" : "";
-        let borderStyle = taken ? 'style="border-color: #9e9e9e; box-shadow: none;"' : '';
+        // 🔥 THE MAGIC FIX: If it is claimed, skip it completely!
+        if (itemData.status === "claimed") {
+            return; 
+        }
+
+        availableItemsCount++; // We found an available item!
 
         // build the HTML card dynamically
         let makeCard = `
-            <div class="item-card" id="card-${docId}" ${borderStyle}>
+            <div class="item-card" id="card-${docId}">
                 <div class="card-icon">${itemData.icon}</div>
                 <h3>${itemData.name}</h3>
                 <p class="item-lister">Listed by: ${itemData.lister}</p>
                 <p>${itemData.description}</p>
-                <button class="claim-btn" id="btn-${docId}" onclick="claimItem('${docId}')" ${disabledState}>${buttonText}</button>
+                <button class="claim-btn" id="btn-${docId}" onclick="claimItem('${docId}')">CLAIM FOR FREE</button>
             </div>
         `;
         htmlContainer.insertAdjacentHTML('beforeend', makeCard);
     });
+    
+    // If every single item was claimed, show a cool empty state message
+    if (availableItemsCount === 0) {
+        htmlContainer.innerHTML = "<h3 style='width:100%; text-align:center; color:#555;'>No items available right now. Be the first to list something! ♻️</h3>";
+    }
 });
 
 // SENDING DATA: When someone lists a new item
@@ -158,17 +167,17 @@ document.getElementById('addItemForm').addEventListener('submit', async function
 // UPDATING DATA: When someone clicks Claim
 window.claimItem = async (docId) => {
     let btn = document.getElementById("btn-" + docId);
-    btn.innerHTML = "WAIT... ⏳";
+    btn.innerHTML = "WAIT... ⏳"; // Flashes for a microsecond before disappearing
     btn.disabled = true;
 
     try {
-        // find the exact item in DB and change status
+        // find the exact item in DB and change status to claimed
         const itemRef = doc(db, "listedItems", docId);
         await updateDoc(itemRef, {
             status: "claimed"
         });
         
-        alert("♻️ Claimed! The board is syncing for everyone else now.");
+        alert("♻️ Claimed! The item has been removed from the live board.");
 
     } catch (err) {
         console.error("Bro, the claim failed. Error: ", err);
