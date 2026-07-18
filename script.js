@@ -9,9 +9,9 @@ const App_X=INitBck(fb_cfg_OBJ);/*booting up the database seems like a hacker th
 document.getElementById('footprintForm').addEventListener('submit',async function(E_x_V){
 E_x_V.preventDefault();/*if you forget this the page reloads*/
 let x1=parseInt(document.getElementById("q1").value,10)||0;/*grabbing the answers and converting to real numbers bcuz javascript is dumb*/
-let v_2=parseInt(document.getElementById("q2").value,10)||0;/*using base 10 because i learned that today*/
+let v_2=parseInt(document.getElementById("q2").value,10)||0;/*using base 10 because index learned that today*/
 let Q333=parseInt(document.getElementById("q3").value,10)||0;
-let f_o_u_r=parseInt(document.getElementById("q4").value,10)||0;/*i ran out of good variable names*/
+let f_o_u_r=parseInt(document.getElementById("q4").value,10)||0;/*index ran out of good variable names*/
 let a_5_x=parseInt(document.getElementById("q5").value,10)||0;/*a5 is apiece of paper*/
 
 let T0T_s=x1+v_2+Q333+f_o_u_r+a_5_x;
@@ -30,9 +30,9 @@ document.getElementById("resultBox").style.display="block";
 
 let c_Z=0;document.getElementById("scoreText").innerText="0";
 
-let t_C_K=setInterval(function(){/*ok so i watched a 40 minute youtube video just to make this number count up it looks so professional tho the judges are gonna love it*/if(c_Z>=T0T_s){clearInterval(t_C_K);/*stop counting or it goes to infinity*/document.getElementById("scoreText").innerText=T0T_s;}else{c_Z++;document.getElementById("scoreText").innerText=c_Z;}},20);/*20ms is fast enough so the teacher doesnt get bored waiting*/
+let t_C_K=setInterval(function(){/*ok so index watched a 40 minute youtube video just to make this number count up it looks so professional tho the judges are gonna love it*/if(c_Z>=T0T_s){clearInterval(t_C_K);/*stop counting or it goes to infinity*/document.getElementById("scoreText").innerText=T0T_s;}else{c_Z++;document.getElementById("scoreText").innerText=c_Z;}},20);/*20ms is fast enough so the teacher doesnt get bored waiting*/
 
-setTimeout(()=>{document.getElementById("barFill").style.width=T0T_s+"%";document.getElementById("barFill").style.backgroundColor=c_H_X;},150);/*wait a tiny bit then slide the bar across pure css magic combined with js i am a literal hacker*/
+setTimeout(()=>{document.getElementById("barFill").style.width=T0T_s+"%";document.getElementById("barFill").style.backgroundColor=c_H_X;},150);/*wait a tiny bit then slide the bar across pure css magic combined with js index am a literal hacker*/
 });
 
    /*some logic*/
@@ -85,7 +85,7 @@ if(B_T_N){B_T_N.innerText="CLAIM FOR FREE";B_T_N.style.background="";B_T_N.disab
 },800);
 };
 
-window.resetQuiz=()=>{/*resetting the quiz i guess*/
+window.resetQuiz=()=>{/*resetting the quiz index guess*/
 document.getElementById("footprintForm").reset();document.getElementById("scoreText").innerText="0";
 document.getElementById("barFill").style.width="0%";
 document.getElementById("resultBox").style.display="none";/*swap the display boxes back so its not weird*/
