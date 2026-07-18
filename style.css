@@ -4,7 +4,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1); } /* reset everything because html is naturally ugly upgraded to cubic-bezier for buttery smooth OP physics */
 
-body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg-dark); color: white; overflow-x: hidden; cursor: crosshair; background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(46, 204, 113, 0.07) 2px, rgba(46, 204, 113, 0.07) 4px); } /* applied the OP footer scanlines to the entire body text is now white because dark mode is supreme */
+body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg-dark); color: white; overflow-x: hidden; cursor: crosshair; background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1.5px, transparent 1.5px); background-size: 25px 25px; } /* clean micro-dot dark matrix for the main body */
 
 ::selection { background-color: var(--green); color: black; text-shadow: none; } /* custom highlight color so when the teacher grades it it looks expensive */
 
@@ -21,7 +21,7 @@ body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 .top-nav nav a { color: white; text-decoration: none; font-weight: 700; margin-left: 20px; cursor: pointer; display: inline-block; }
 .top-nav nav a:hover { color: var(--green); border-bottom: 3px solid var(--green); transform: translateY(-3px) scale(1.05); text-shadow: 0 0 8px var(--green); } /* links glow on hover */
 
-.banner { background-color: transparent; color: white; text-align: center; padding: 80px 20px; border-bottom: 8px solid var(--green); } /* removed the weird floating dots. keeping it clean and hacker-ish */
+.banner { background-color: #020202; background-image: radial-gradient(circle at 50% 100%, rgba(46, 204, 113, 0.15), transparent 60%); color: white; text-align: center; padding: 80px 20px; border-bottom: 8px solid var(--green); } /* sick glowing reactor core gradient for the hero section */
 .banner h1 { font-family: "Orbitron", sans-serif; font-size: 4rem; margin-bottom: 20px; color: var(--green); text-shadow: 4px 4px 0px rgba(46,204,113,0.3); animation: fadeInUp 0.8s ease-out, floatInfinite 5s ease-in-out infinite alternate; letter-spacing: -2px; } /* heading floats now too */
 .banner p { font-size: 1.2rem; max-width: 700px; margin: 0 auto 30px auto; font-weight: 600; color: #ccc; }
 
@@ -29,7 +29,7 @@ body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 .big-btn:hover { background-color: black; color: var(--green); border-color: var(--green); transform: translate(-3px, -3px) scale(1.02); box-shadow: 12px 12px 0px var(--green); animation: none; }
 .big-btn:active { transform: translate(4px, 4px) scale(0.98); box-shadow: 0px 0px 0px var(--green); } /* satisfying click physics doing this instead of my actual homework */
 
-.threats-wrapper { padding: 80px 20px; background-color: rgba(0,0,0,0.5); } /* dark section overlay */
+.threats-wrapper { padding: 80px 20px; background-color: #040404; background-image: repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255, 87, 34, 0.04) 20px, rgba(255, 87, 34, 0.04) 40px); } /* cyberpunk barcode vertical scanning lines */
 .main-heading { font-family: "Orbitron", sans-serif; color: white; text-align: center; font-size: 2.8rem; margin-bottom: 50px; text-decoration: underline; text-decoration-thickness: 6px; text-decoration-color: var(--green); text-underline-offset: 8px; text-shadow: 2px 2px 0px var(--orange); letter-spacing: -1px; transition: transform 0.3s ease; } /* no underline is just emptyish */
 .main-heading:hover { transform: scale(1.05) rotate(-1deg); text-shadow: 4px 4px 0px var(--green); } /* headings jump when you mouse over them because we are extra */
 
@@ -40,7 +40,7 @@ body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 .box-emoji { font-size: 3.5rem; margin-bottom: 15px; display: inline-block; filter: drop-shadow(2px 2px 0px rgba(46,204,113,0.5)); }
 .info-box:hover .box-emoji { animation: pulse 1s infinite; transform: scale(1.2); filter: drop-shadow(2px 2px 0px rgba(255,87,34,0.5)); } /* little easter egg css pulse animation goes brrrrr */
 
-.sim-area { padding: 80px 20px; border-top: 8px solid var(--green); border-bottom: 8px solid var(--green); background-color: black; } /* deleted the checkerboard. keeping it deep dark for maximum contrast */
+.sim-area { padding: 80px 20px; border-top: 8px solid var(--green); border-bottom: 8px solid var(--green); background-color: #080808; background-image: repeating-linear-gradient(45deg, rgba(46, 204, 113, 0.04) 0px, rgba(46, 204, 113, 0.04) 2px, transparent 2px, transparent 20px), repeating-linear-gradient(-45deg, rgba(46, 204, 113, 0.04) 0px, rgba(46, 204, 113, 0.04) 2px, transparent 2px, transparent 20px); animation: panGrid 15s linear infinite; } /* highly tactical moving diagonal wireframe mesh */
 .sim-area .main-heading { color: white; text-shadow: 3px 3px 0px var(--orange); }
 .quiz-box { max-width: 600px; margin: 0 auto; background-color: var(--card-dark); padding: 40px; border: 4px solid var(--orange); box-shadow: 10px 10px 0px var(--orange); }
 .q-wrap { margin-bottom: 25px; }
@@ -53,7 +53,7 @@ body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 .submit-button:hover { background-color: black; color: var(--orange); border-color: var(--orange); transform: translate(-3px, -3px) scale(1.02); box-shadow: 12px 12px 0px var(--orange); animation: none; }
 .submit-button:active { transform: translate(4px, 4px) scale(0.98); box-shadow: 0px 0px 0px var(--orange); }
 
-.end-screen { margin-top: 30px; padding: 30px; border: 4px solid var(--yellow); background-color: #111; background-image: repeating-linear-gradient(-45deg, rgba(255,215,0,0.05), rgba(255,215,0,0.05) 20px, transparent 20px, transparent 40px); background-size: 56.57px 56.57px; text-align: center; animation: fadeInUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), slideHazard 1.5s linear infinite; } /* toned down the hazard tape so it matches dark mode */
+.end-screen { margin-top: 30px; padding: 30px; border: 4px solid var(--yellow); background-color: #050505; background-image: repeating-radial-gradient(circle at center, transparent 0, transparent 15px, rgba(255, 215, 0, 0.05) 15px, rgba(255, 215, 0, 0.05) 30px); text-align: center; animation: fadeInUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); } /* concentric radar targeting rings */
 .big-emoji { font-size: 60px; margin-bottom: 10px; animation: pulse 2s infinite; filter: drop-shadow(0 0 10px var(--yellow)); }
 .bar-background { width: 100%; height: 35px; border: 4px solid var(--green); background-color: black; margin: 20px 0; overflow: hidden; border-radius: 20px; box-shadow: inset 3px 3px 0px rgba(0,0,0,0.5); }
 .bar-color { height: 100%; width: 0%; background-color: var(--green); border-right: 4px solid black; transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); background-image: linear-gradient(45deg, rgba(0,0,0,0.3) 25%, transparent 25%, transparent 50%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.3) 75%, transparent 75%, transparent); background-size: 30px 30px; animation: moveStripes 1s linear infinite; } /* added OP moving candy-cane stripes to the progress bar */
@@ -62,7 +62,7 @@ body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 .btn-retry:hover { background-color: var(--yellow); color: black; transform: translate(-3px, -3px) scale(1.05); box-shadow: 8px 8px 0px var(--green); border-color: var(--green); }
 .btn-retry:active { transform: translate(4px, 4px) scale(0.95); box-shadow: 0px 0px 0px var(--yellow); }
 
-.board-area { padding: 80px 20px; background-color: rgba(0,0,0,0.6); } /* removed pegboard keeping it clean overlay */
+.board-area { padding: 80px 20px; background-color: #030303; background-image: radial-gradient(rgba(255, 87, 34, 0.1) 2px, transparent 2px), radial-gradient(rgba(255, 87, 34, 0.1) 2px, transparent 2px); background-size: 30px 30px; background-position: 0 0, 15px 15px; } /* staggered glowing pegboard background */
 .sub-text { text-align: center; max-width: 600px; margin: -30px auto 40px auto; font-size: 1.1rem; font-weight: 600; color: #aaa; }
 
 .new-post-box { max-width: 600px; margin: 0 auto 50px auto; background-color: var(--card-dark); padding: 30px; border: 4px solid var(--green); box-shadow: 10px 10px 0px var(--green); }
@@ -97,7 +97,7 @@ body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 /* ANIMATIONS YAY - if the page lags blame the school network not my code */
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1) rotate(5deg); } 100% { transform: scale(1); } }
-@keyframes slideHazard { 100% { background-position: 56.57px 0; } } /* moves the hazard stripes diagonally perfectly */
+@keyframes panGrid { 100% { background-position: 40px 40px; } } /* moves the sim diagonal wireframe */
 @keyframes logoShine { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } } /* shine animation frames */
 @keyframes moveStripes { 100% { background-position: 30px 0; } } /* makes the progress bar spin basically */
 @keyframes floatInfinite { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } } /* infinite anti-gravity floating loop */
@@ -105,7 +105,7 @@ body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 @keyframes glowPulse { 0% { box-shadow: 6px 6px 0px rgba(46,204,113,0.5); } 50% { box-shadow: 6px 6px 20px rgba(46,204,113,0.8), 6px 6px 0px var(--green); } 100% { box-shadow: 6px 6px 0px rgba(46,204,113,0.5); } } /* neon button pulsing */
 @keyframes glowPulseOrange { 0% { box-shadow: 6px 6px 0px rgba(255,87,34,0.5); } 50% { box-shadow: 6px 6px 20px rgba(255,87,34,0.8), 6px 6px 0px var(--orange); } 100% { box-shadow: 6px 6px 0px rgba(255,87,34,0.5); } }
 
-footer { background-color: black; background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(46, 204, 113, 0.15) 2px, rgba(46, 204, 113, 0.15) 4px); color: white; text-align: center; padding: 60px 20px; font-weight: bold; border-top: 12px solid var(--green); box-shadow: 0 -10px 30px rgba(46,204,113,0.1); } /* hacked in retro scanlines using tiny repeating gradients in neon green */
+footer { background-color: black; background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(46, 204, 113, 0.15) 2px, rgba(46, 204, 113, 0.15) 4px); color: white; text-align: center; padding: 60px 20px; font-weight: bold; border-top: 12px solid var(--green); box-shadow: 0 -10px 30px rgba(46,204,113,0.1); } /* hacked in retro scanlines using tiny repeating gradients in neon green - untouched perfection */
 footer h2 { font-family: "Orbitron", sans-serif; color: var(--green); margin-bottom: 15px; font-size: 2.2rem; text-transform: uppercase; letter-spacing: 2px; text-shadow: 3px 3px 0px rgba(46,204,113,0.4); }
 
 @media (max-width: 768px) { .top-nav { flex-direction: column; gap: 15px; padding: 20px; } .banner h1 { font-size: 2.5rem; } .info-box, .item-card { width: 100%; max-width: 400px; animation: none; } .flex-inputs { flex-direction: column; gap: 0; } .sim-area, .board-area, .threats-wrapper { padding: 40px 15px; } } /* mobile view so the judges dont complain so iter had to hardcode this do not touch. disabled anti-gravity on mobile so phones dont explode */
