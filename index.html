@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Yo, we need a better title for the tab, but this works for now lol -->
-  <title>EcoFootprint - Fixing the world one div at a time 🌍</title>
+  <!-- To-do: update title later -->
+  <title>EcoFootprint - Climate Action Simulator 🌍</title>
   <link href="style.css" rel="stylesheet">
 </head>
 <body>
   
-  <!-- nav bar: simple, clean, maybe too clean? nah it's fire -->
+  <!-- Navigation bar -->
   <header class="top-nav">
     <h2 class="site-logo">🌿 EcoFootprint</h2>
     <nav>
@@ -20,36 +20,36 @@
     </nav>
   </header>
 
-  <!-- main banner thing: needs more hype -->
+  <!-- Main banner -->
   <div id="home" class="banner">
     <h1>SYSTEMIC CLIMATE ACTION 🌍⚡</h1>
-    <p>Look, recycling your plastic straw is cool and all, but we need MAJOR policy changes to actually save the planet. Use our simulator to go full "Global Leader Mode" or use the Give & Take Board to stop being a wasteful consumer!</p>
+    <p>Individual actions matter, but we need major policy changes to make a real impact on the climate. Use our simulator to test global policies or use the Give & Take Board to share resources locally!</p>
     <a href="#sim"><button class="big-btn">START POLICY SIMULATOR 👇</button></a>
   </div>
 
-  <!-- threats boxes -->
+  <!-- Threat boxes -->
   <div class="threats-wrapper">
-    <h2 class="main-heading">The Real Threat Levels 🚨</h2>
+    <h2 class="main-heading">Key Climate Threats 🚨</h2>
     <div class="flex-boxes">
       <div class="info-box">
         <h1 class="box-emoji">🏭</h1>
         <h3>Fossil Fuel Reliance</h3>
-        <p>Big Oil is still the main boss fight. We need to switch to renewables before we hit a game over.</p>
+        <p>Fossil fuels are the leading cause of global emissions. We must transition to renewable energy to stabilize the climate.</p>
       </div>
       <div class="info-box">
         <h1 class="box-emoji">🌲</h1>
         <h3>Deforestation</h3>
-        <p>Nature's lungs are being chopped down. If we lose the trees, we lose the vibe, and the air.</p>
+        <p>Forests act as vital carbon sinks. Continued deforestation accelerates climate change and destroys habitats.</p>
       </div>
       <div class="info-box">
         <h1 class="box-emoji">🗑️</h1>
         <h3>Linear Economy</h3>
-        <p>Our current "buy, break, toss" cycle is honestly mid. We need circularity for the W.</p>
+        <p>Our current model of use-and-throw-away produces too much waste. We need to move toward a circular economy.</p>
       </div>
     </div>
   </div>
 
-  <!-- the simulator: try not to crash the planet lol -->
+  <!-- The simulator -->
   <div id="sim" class="sim-area">
     <h2 class="main-heading">⚡ Policy Deployment Simulator ⚡</h2>
     <div class="quiz-box">
@@ -60,8 +60,8 @@
           <select id="q1" required>
             <option value="">-- Pick your path --</option>
             <option value="20">100% Transition to Solar, Wind & Geothermal</option>
-            <option value="10">Mixed Grid (Keep natural gas... for now)</option>
-            <option value="0">More fossil fuels? Are you serious?</option>
+            <option value="10">Mixed Grid (Keep natural gas during transition)</option>
+            <option value="0">Maintain current fossil fuel dependence</option>
           </select>
         </div>
         
@@ -71,8 +71,8 @@
           <select id="q2" required>
             <option value="">-- Pick your path --</option>
             <option value="20">Strictly protect existing forests & oceans</option>
-            <option value="10">Plant some trees, but ignore the deforestation</option>
-            <option value="0">Slash and burn for more farms? No.</option>
+            <option value="10">Plant trees, but allow current deforestation rates</option>
+            <option value="0">Continue clear-cutting for agricultural expansion</option>
           </select>
         </div>
 
@@ -81,9 +81,9 @@
           <label>3. Agricultural & Food System Shift 🍎</label>
           <select id="q3" required>
             <option value="">-- Pick your path --</option>
-            <option value="20">Global shift to plant-rich diets & way less waste</option>
-            <option value="10">Keep the factory farms, just go organic</option>
-            <option value="0">Factory farming forever? (Not sustainable!)</option>
+            <option value="20">Global shift to plant-rich diets & reduced waste</option>
+            <option value="10">Keep industrial farming, but increase organic practices</option>
+            <option value="0">Maintain current industrial agriculture</option>
           </select>
         </div>
 
@@ -92,9 +92,9 @@
           <label>4. Urban Transport Infrastructure 🚄</label>
           <select id="q4" required>
             <option value="">-- Pick your path --</option>
-            <option value="20">High-Speed Rail & Walkable Cities = GOAT</option>
-            <option value="10">Just buy more EVs but keep car-only cities</option>
-            <option value="0">More highways! (Who even likes traffic?)</option>
+            <option value="20">High-Speed Rail & Walkable Urban Planning</option>
+            <option value="10">Subsidize EVs but keep car-centric infrastructure</option>
+            <option value="0">Expand highway infrastructure</option>
           </select>
         </div>
 
@@ -103,19 +103,19 @@
           <label>5. Industry & Manufacturing 🏗️</label>
           <select id="q5" required>
             <option value="">-- Pick your path --</option>
-            <option value="20">Circular Economy (Right-to-Repair everything)</option>
-            <option value="10">Recycle more, but keep making plastic junk</option>
-            <option value="0">Total status quo. Just throw it away.</option>
+            <option value="20">Circular Economy (Right-to-Repair policies)</option>
+            <option value="10">Increase recycling, but maintain single-use plastics</option>
+            <option value="0">Maintain current manufacturing waste levels</option>
           </select>
         </div>
         
         <button type="submit" class="submit-button">ENACT GLOBAL POLICIES 📈</button>
       </form>
       
-      <!-- hidden result screen -->
+      <!-- Hidden result screen -->
       <div id="resultBox" class="end-screen" style="display: none;">
         <h1 id="resultEmoji" class="big-emoji">🌍</h1>
-        <h3>Sustainability Score: <span id="scoreText">0</span> / 100!</h3>
+        <h3>Sustainability Score: <span id="scoreText">0</span> / 100</h3>
         <div id="barBacking" class="bar-background"><div id="barFill" class="bar-color"></div></div>
         <p id="feedbackText"></p>
         <button type="button" class="btn-retry" onclick="resetQuiz()">Adjust Policies 🔄</button>
@@ -123,10 +123,10 @@
     </div>
   </div>
 
-  <!-- give and take board section -->
+  <!-- Give and take board section -->
   <div id="board" class="board-area">
     <h2 class="main-heading">♻️ The Give & Take Board ♻️</h2>
-    <p class="sub-text">Stop buying new stuff! List your old gear or grab something you need. It’s basically free real estate.</p>
+    <p class="sub-text">List your unused items or find something you need. Reusing items helps reduce overall waste in our community.</p>
     
     <div class="new-post-box">
       <h3>List a New Item 📦</h3>
@@ -144,33 +144,33 @@
         </div>
         <input type="text" id="newListerName" placeholder="Your Name & Class" required>
         <textarea id="newItemDesc" rows="3" placeholder="Condition? Where do we meet?" required></textarea>
-        <button type="submit" class="post-btn">LIST ITEM SECURELY 🔒</button>
+        <button type="submit" class="post-btn">LIST ITEM 🔒</button>
       </form>
     </div>
 
     <div id="live-board" class="flex-boxes">
-      <h3 style="width:100%; text-align:center; color:gray;">📡 Syncing live items from the cloud...</h3>
+      <h3 style="width:100%; text-align:center; color:gray;">📡 Loading items from the database...</h3>
     </div>
 
-    <!-- NEW: Claimed Items Section -->
+    <!-- Claimed Items Section -->
     <div class="claimed-box">
       <details>
-        <summary>👀 Who grabbed what? (Claimed History)</summary>
-        <p>Check here to see which legends already swapped their gear.</p>
+        <summary>👀 Claimed History</summary>
+        <p>Check here to see which items have already been swapped.</p>
         <ul id="claimed-list">
           <!-- JS will push data here -->
-          <li>No items claimed yet... be the first!</li>
+          <li>No items claimed yet.</li>
         </ul>
       </details>
     </div>
   </div>
 
-  <!-- footer -->
+  <!-- Footer -->
   <footer id="about" class="about-us">
-    <h2>Who Made This 🤜🤛</h2>
-    <p>Built for the 2026 webathon. Two 9th graders who spent way too long debugging CSS.</p>
+    <h2>About the Developers 🤜🤛</h2>
+    <p>Built for the 2026 webathon by two 9th-grade students.</p>
     <br>
-    <p>© 2026 Team CodeGreens. Let's fix the planet before we graduate. 🌍</p>
+    <p>© 2026 Team CodeGreens. Working towards a sustainable future. 🌍</p>
   </footer>
 
   <script type="module" src="script.js"></script>
