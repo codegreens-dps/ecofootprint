@@ -100,13 +100,23 @@ window.resetQuiz = () => {
     window.scrollTo(0, document.getElementById('sim').offsetTop); 
 };
 
-/* WINNER PROTOCOL: THE GOD-TIER FLEX */
-window.activateWinnerProtocol = () => {
-    // 1. Shake the screen and apply Gold Strobe
+/* SYSTEM OVERRIDE SEQUENCE: THE GOD-TIER FLEX */
+window.activateWinnerProtocol = async () => {
+    // 1. Create the Terminal Override overlay
+    let terminal = document.createElement('div');
+    terminal.className = 'terminal-overlay';
+    terminal.innerHTML = '<div class="typing">SYSTEM OVERRIDE: WINNERS GRANTED...</div>';
+    document.body.appendChild(terminal);
+
+    // 2. Wait for the hacker effect to finish
+    await new Promise(r => setTimeout(r, 2500));
+    terminal.remove();
+
+    // 3. Shake the screen and apply Gold Mode
     document.body.classList.add('shake');
     document.body.classList.add('winner-mode');
     
-    // 2. Spawn 80 pieces of high-intensity confetti
+    // 4. Spawn 80 pieces of high-intensity confetti
     for(let i = 0; i < 80; i++) {
         let c = document.createElement('div');
         c.className = 'confetti';
@@ -116,13 +126,13 @@ window.activateWinnerProtocol = () => {
         document.body.appendChild(c);
     }
     
-    // 3. Create the massive victory text
+    // 5. Create the massive victory banner
     let banner = document.createElement('div');
     banner.className = 'victory-banner';
-    banner.innerHTML = '<h1 style="font-size: 12rem; color: white; text-shadow: 10px 10px 0px black; font-family: sans-serif; letter-spacing: -5px;">WINNERS! 🏆</h1>';
+    banner.innerHTML = '<h1 style="font-size: 8rem; color: white; text-shadow: 10px 10px 0px black; font-family: sans-serif; letter-spacing: -5px;">WINNERS! 🏆</h1>';
     document.body.appendChild(banner);
     
-    // 4. Cleanup everything after 4 seconds
+    // 6. Cleanup everything after 4 seconds
     setTimeout(() => {
         document.body.classList.remove('shake');
         document.body.classList.remove('winner-mode');
