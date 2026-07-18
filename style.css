@@ -47,6 +47,7 @@ body {
 
 .top-nav {
     background-color: rgba(255, 255, 255, 0.9);
+    -webkit-backdrop-filter: blur(5px); /*added for Safari/iPhone support*/
     backdrop-filter: blur(5px); /*top nav added a blur effect so it looks like glass when scrolling please dont touch the final index iter just kept hitting 9 until it stayed on top*/
     border-bottom: var(--border-thick);
     padding: 15px 30px;
