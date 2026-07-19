@@ -181,14 +181,15 @@ window.activateWinnerProtocol = function() {
     var b = document.createElement('div'); b.className = 'victory-banner';
     b.innerHTML = '<h1 style="font-family: \'Orbitron\', sans-serif; font-size: 5rem; color: #fff; text-shadow: 10px 10px 0px var(--orange);">HACKATHON WINNERS! 🏆</h1>'; document.body.appendChild(b);
     
-    // 3. Remove everything after 3 seconds
-    setTimeout(function(){ if (b.parentNode) b.remove(); document.body.classList.remove("winner-mode"); }, 3000);
+    // 3. Remove everything after 5 seconds (5000ms)
+    setTimeout(function(){ if (b.parentNode) b.remove(); document.body.classList.remove("winner-mode"); }, 5000);
     console.log("Judges: 'Wow, such clean code.'");
 
     /* Konami Code: ↑↑↓↓←→←→ba */
     const k = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a']; let p = 0;
     document.addEventListener('keydown', (e) => {
         p = (e.key.toLowerCase() === k[p]) ? p + 1 : 0;
-        if (p === k.length) { p = 0; document.body.classList.add('winner-mode'); setTimeout(() => document.body.classList.remove('winner-mode'), 2000); }
+        // Updated this timeout to 5000ms as well
+        if (p === k.length) { p = 0; document.body.classList.add('winner-mode'); setTimeout(() => document.body.classList.remove('winner-mode'), 5000); }
     });
 };
