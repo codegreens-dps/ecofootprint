@@ -127,7 +127,6 @@ window.onload = function() {
     };
 
     /* board stuff */
-    /* board stuff */
     onSnapshot(query(collection(database, "listedItems"), orderBy("timestamp", "desc")), function(s) {
         var b = document.getElementById('live-board'), l = document.getElementById('claimed-list');
         b.innerHTML=""; l.innerHTML=""; var i_c=0, c_c=0;
@@ -152,11 +151,6 @@ window.onload = function() {
         if(c_c==0) l.innerHTML="<li class='empty-state'>No items claimed yet... be the first!</li>";
     });
 
-        var el = document.getElementById('landfillCounter'); if(el) el.innerText=c_c;
-        if(i_c==0) b.innerHTML="<h3 style='width:100%;text-align:center;color:var(--text-color);' class='blink-text'>No items available right now. Be the first to list something!</h3>";
-        if(c_c==0) l.innerHTML="<li class='empty-state'>No items claimed yet... be the first!</li>";
-    });
-
     document.getElementById('addItemForm').onsubmit = function(ev) {
         ev.preventDefault(); var btn = document.querySelector(".post-btn"), txt = btn.innerText; btn.innerText="UPLOADING..."; 
         var n = document.getElementById('newItemName').value, i = document.getElementById('newItemIcon').value, lst = document.getElementById('newListerName').value, desc = document.getElementById('newItemDesc').value;
@@ -167,7 +161,7 @@ window.onload = function() {
             document.getElementById('addItemForm').reset(); btn.innerText=txt;
         }).catch(function(e){ console.log(e); alert("network error bro, our school blocklist probably blocked firebase again smh"); btn.innerText=txt; });
     };
-};
+}; /* <--- This bracket correctly closes the window.onload function */
 
 window.claimIt = function(id) {
     var un = prompt("♻️ Awesome! Enter your name & class so the owner knows who to give it to:"); if(un=="" || un==null) return; 
