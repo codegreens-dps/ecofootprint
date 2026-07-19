@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js"; /* this works finally */
-import{getFirestore,collection,addDoc,onSnapshot,query,orderBy,updateDoc,doc,serverTimestamp}from"https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, updateDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 /* DO NOT TOUCH THE CONFIG OR THE DB EXPLODES */
 var conf = {apiKey:"AIzaSyBNO8SiOBW49CqL7YgHd572pF9mikE7ABo",authDomain:"ecofootprint-9c4ed.firebaseapp.com",projectId:"ecofootprint-9c4ed",storageBucket:"ecofootprint-9c4ed.firebasestorage.app",messagingSenderId:"425267033599",appId:"1:425267033599:web:3554770c24a204594ba3ca",measurementId:"G-NCNFZTHKS4"};
@@ -14,20 +14,53 @@ function cln(s){
   return d.innerHTML;
 }
 
+/* KONAMI CODE EASTER EGG (Up Up Down Down Left Right Left Right B A) */
+const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+let konamiPosition = 0;
+
+document.addEventListener('keydown', function(e) {
+    if (e.key.toLowerCase() === konamiCode[konamiPosition] || e.key === konamiCode[konamiPosition]) {
+        konamiPosition++;
+        if (konamiPosition === konamiCode.length) {
+            document.getElementById('konami-modal').style.display = 'flex';
+            konamiPosition = 0;
+            // Glitch out the page for 1 second as an extra effect
+            document.body.classList.add('winner-mode');
+            setTimeout(() => document.body.classList.remove('winner-mode'), 1000);
+        }
+    } else {
+        konamiPosition = 0;
+    }
+});
+
 /* putting everything in onload because it broke otherwise */
 window.onload = function() {
   
-  /* --- NEW STUFF: Electricity Maps API Magic (Now with visual meter!) --- */
+  /* --- Electricity Maps API Magic --- */
   var fetchCarbonIntensity = async function(zone) {
       var valDisplay = document.getElementById("intensityValue");
       var meterFill = document.getElementById("intensityMeterFill");
       var statusDisplay = document.getElementById("intensityStatus");
       
+      // Easter Egg: Mars Colony Alpha
+      if(zone === "MARS") {
+          valDisplay.innerText = "-42";
+          if(meterFill) {
+              meterFill.style.width = "100%";
+              meterFill.style.backgroundColor = "#ff4500";
+          }
+          if(statusDisplay) {
+              statusDisplay.innerText = "Elon approves. 100% Nuclear/Solar. 🚀";
+              statusDisplay.style.color = "#ff4500";
+          }
+          return;
+      }
+
       valDisplay.innerText = "Loading...";
       if(meterFill) meterFill.style.width = "0%";
       if(statusDisplay) {
           statusDisplay.innerText = "Checking grid health...";
-          statusDisplay.style.color = "gray";
+          statusDisplay.style.color = "var(--text-color)";
       }
 
       try {
@@ -65,15 +98,14 @@ window.onload = function() {
                       statusDisplay.innerText = "Moderate emissions. Meh. 🤷‍♂️";
                       statusDisplay.style.color = "var(--yellow)";
                   } else {
-                      meterFill.style.backgroundColor = "var(--orange)";
+                      meterFill.style.backgroundColor = "var(--red)";
                       statusDisplay.innerText = "Grid is literally coughing smog. 🏭";
-                      statusDisplay.style.color = "var(--orange)";
+                      statusDisplay.style.color = "var(--red)";
                   }
               }
           } else {
               valDisplay.innerText = "--"; 
               if(statusDisplay) statusDisplay.innerText = "Region data offline 💀";
-              console.warn("⚠️ API returned empty data for this zone:", data);
           }
       } catch (err) {
           console.error("🚨 Electricity API completely failed: ", err.message);
@@ -90,7 +122,6 @@ window.onload = function() {
       });
       fetchCarbonIntensity(regionDrop.value);
   }
-  /* --- END OF NEW API STUFF --- */
 
 
   /* quiz section logic */
@@ -113,20 +144,29 @@ window.onload = function() {
 
     var fb = document.getElementById("feedbackText");
     var emj = ""; var col = "";
+    var displayScore = summ;
 
-    if(summ>79){
-        emj="🌍"; col="green";
+    // EASTER EGG: Selected the secret Teleportation option (-50)
+    if(summ < 0) {
+        emj="🛸"; col="var(--purple)";
+        fb.innerText="🌌 WAIT WHAT. You unlocked alien teleportation technology! Carbon emissions for transport dropped to zero. You literally solved climate change with sci-fi.";
+        fb.style.color="var(--purple)";
+        displayScore = "ERROR: 999"; // Glitched score
+        summ = 100; // fill bar all the way
+    }
+    else if(summ>79){
+        emj="🌍"; col="var(--green)";
         fb.innerText="🔥 INCREDIBLE! You implemented a true sustainable framework. By shifting to renewables and enforcing a circular economy, we can reach Net-Zero!";
-        fb.style.color="green";
+        fb.style.color="var(--green)";
     }else{
         if(summ>39 && summ<80){
-            emj="⚠️"; col="orange";
+            emj="⚠️"; col="var(--yellow)";
             fb.innerText="🌱 A GOOD START. But half-measures aren't enough. We need systemic shifts in lots of things. Try again!";
-            fb.style.color="orange";
+            fb.style.color="var(--yellow)";
         }else{
-            emj="❌"; col="red";
+            emj="❌"; col="var(--red)";
             fb.innerText="🚨 DISASTER. Continuing the status quo guarantees severe global warming. We need massive policy shifts immediately.";
-            fb.style.color="red";
+            fb.style.color="var(--red)";
         }
     }
 
@@ -137,15 +177,20 @@ window.onload = function() {
     var c=0;
     document.getElementById("scoreText").innerText="0";
 
-    var tmr = setInterval(function(){
-        if(c>=summ){
-            clearInterval(tmr); 
-            document.getElementById("scoreText").innerText=summ;
-        }else{
-            c++;
-            document.getElementById("scoreText").innerText=c;
-        }
-    }, 20); 
+    if(displayScore === "ERROR: 999") {
+        document.getElementById("scoreText").innerText = displayScore;
+        document.getElementById("scoreText").classList.add("glitch-text");
+    } else {
+        var tmr = setInterval(function(){
+            if(c>=summ){
+                clearInterval(tmr); 
+                document.getElementById("scoreText").innerText=summ;
+            }else{
+                c++;
+                document.getElementById("scoreText").innerText=c;
+            }
+        }, 20); 
+    }
 
     setTimeout(function(){
         document.getElementById("barFill").style.width=summ+"%";
@@ -179,12 +224,12 @@ window.onload = function() {
           }else{
               i_c++;
               var html = "";
-              html += "<div class='item-card' id='card-"+iid+"'>";
+              html += "<div class='item-card neo-border hover-lift' id='card-"+iid+"'>";
               html += "<div class='card-icon'>"+o.icon+"</div>";
               html += "<h3>"+n1+"</h3>";
-              html += "<p class='lister-name'>Listed by: "+l3+"</p>";
+              html += "<p class='lister-name mono-text'>Listed by: "+l3+"</p>";
               html += "<p>"+d4+"</p>";
-              html += "<button class='grab-btn' id='btn-"+iid+"' onclick='claimIt(\""+iid+"\")'>CLAIM FOR FREE</button>";
+              html += "<button class='grab-btn brutal-btn' id='btn-"+iid+"' onclick='claimIt(\""+iid+"\")'>CLAIM FOR FREE ⚡</button>";
               html += "</div>";
               b.innerHTML += html;
           }
@@ -194,10 +239,10 @@ window.onload = function() {
       if(el){ el.innerText=c_c; }
 
       if(i_c==0){
-          b.innerHTML="<h3 style='width:100%;text-align:center;color:gray;'>No items available right now. Be the first to list something!</h3>";
+          b.innerHTML="<h3 style='width:100%;text-align:center;color:var(--text-color);' class='blink-text'>No items available right now. Be the first to list something!</h3>";
       }
       if(c_c==0){
-          l.innerHTML="<li>No items claimed yet... be the first!</li>";
+          l.innerHTML="<li class='empty-state'>No items claimed yet... be the first!</li>";
       }
   });
 
@@ -215,7 +260,12 @@ window.onload = function() {
       addDoc(collection(database, "listedItems"), {
           name: n, icon: i, lister: lst, description: desc, status: "available", timestamp: serverTimestamp()
       }).then(function(){
-          alert("It's live on the board! (unless the wifi blocked it)");
+          // Easter Egg trigger: Listed alien tech
+          if(i === "🛸") {
+              alert("Wait, where did you find Alien Tech?! 👽 It's live on the board!");
+          } else {
+              alert("It's live on the board! (unless the wifi blocked it)");
+          }
           document.getElementById('addItemForm').reset();
           btn.innerText=txt;
       }).catch(function(e){
@@ -227,13 +277,14 @@ window.onload = function() {
 };
 
 window.claimIt = function(id) {
-    var un = prompt("♻️ Awesome! Enter your name & class so the owner knows who to give it to: (separate by comma)");
+    var un = prompt("♻️ Awesome! Enter your name & class so the owner knows who to give it to:");
     if(un=="" || un==null){return;} 
 
     var btn = document.getElementById("btn-"+id);
     if(btn){
         btn.innerText="CLAIMED!";
-        btn.style.background="green";
+        btn.style.background="var(--green)";
+        btn.style.color="#000";
         btn.disabled=true; 
     }
 
@@ -245,8 +296,9 @@ window.claimIt = function(id) {
             console.log(e);
             alert("🚨 ERROR: Couldn't connect to server! Try turning off your VPN maybe?");
             if(btn){
-                btn.innerText="CLAIM FOR FREE";
+                btn.innerText="CLAIM FOR FREE ⚡";
                 btn.style.background="";
+                btn.style.color="";
                 btn.disabled=false; 
             }
         });
@@ -256,17 +308,18 @@ window.claimIt = function(id) {
 window.resetQuiz = function() {
     document.getElementById("footprintForm").reset();
     document.getElementById("scoreText").innerText="0";
+    document.getElementById("scoreText").className="glitch-score";
     document.getElementById("barFill").style.width="0%";
     document.getElementById("resultBox").style.display="none";
     document.getElementById("footprintForm").style.display="block"; 
-    window.scrollTo(0, document.getElementById('sim').offsetTop); 
+    window.scrollTo({ top: document.getElementById('sim').offsetTop, behavior: 'smooth' }); 
 };
 
 window.activateWinnerProtocol = function() {
     document.body.className += " winner-mode";
     var b = document.createElement('div');
     b.className = 'victory-banner';
-    b.innerHTML = '<h1 style="font-size: 8rem; color: #ffd700; text-shadow: 10px 10px 0px black;">WINNERS! 🏆</h1>';
+    b.innerHTML = '<h1 style="font-size: 8rem; color: #fff; text-shadow: 10px 10px 0px var(--purple);">HACKATHON WINNERS! 🏆</h1>';
     document.body.appendChild(b);
     
     setTimeout(function(){
