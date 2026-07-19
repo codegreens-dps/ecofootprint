@@ -296,3 +296,29 @@ footer h2 { font-family: "Orbitron", sans-serif; color: white; margin-bottom: 20
     .sim-area, .board-area, .threats-wrapper { padding: 80px 20px; } 
     .main-heading { font-size: 2.8rem; }
 }
+
+/* Winner Mode Effects */
+.winner-mode {
+    animation: flashColors 0.5s infinite;
+}
+
+.victory-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 999999;
+    text-align: center;
+    pointer-events: none; /* Allows clicking through if needed */
+}
+
+@keyframes flashColors {
+    0% { filter: hue-rotate(0deg); }
+    50% { filter: hue-rotate(180deg); }
+    100% { filter: hue-rotate(360deg); }
+}
