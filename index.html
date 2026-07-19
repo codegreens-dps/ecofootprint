@@ -22,12 +22,12 @@
     <div class="grid-intensity">
         <label for="regionSelect" title="Electricity Maps API magic goes here">⚡ Live Grid Carbon Intensity:</label>
         <select id="regionSelect">
-            <!-- Added a few regions for the judges to play with -->
-            <option value="IN-NO">North India (IN-NO)</option>
-            <option value="US-CA">California (US-CA)</option>
-            <option value="GB">Great Britain (GB)</option>
-            <option value="FR">France (FR)</option>
-            <option value="AU-SA">South Australia (AU-SA)</option>
+            <option value="IN">Mainland India (IN)</option>
+            <option value="IN-EA">Eastern India (IN-EA)</option>
+            <option value="IN-NE">North Eastern India (IN-NE)</option>
+            <option value="IN-NO" selected>Northern India (IN-NO)</option>
+            <option value="IN-SO">Southern India (IN-SO)</option>
+            <option value="IN-WE">Western India (IN-WE)</option>
         </select>
         <div id="intensityDisplay" class="intensity-display">
             <span id="intensityValue">Loading...</span> <small>gCO₂eq/kWh</small>
