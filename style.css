@@ -236,17 +236,27 @@ footer h2 { font-family: "Orbitron", sans-serif; color: white; margin-bottom: 20
         margin: 0.5in;
     }
     
-    body {
+    /* THE FIX: Completely kill the height of the rest of the website */
+    html, body {
+        height: 100vh !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
         background: white !important;
         /* Force browsers to print the colorful progress bar */
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
     
-    /* Hide everything on the site... */
+    /* THE FIX: Remove massive sections from the document flow entirely */
+    header, .banner, .intensity-section, .threats-wrapper, #board, .website-carbon-floating, footer {
+        display: none !important;
+    }
+    
+    /* Hide the remaining stray simulator text... */
     body * { visibility: hidden; }
     
-    /* ...Except the result box! */
+    /* ...Except the actual report! */
     #resultBox, #resultBox * { visibility: visible; }
     
     #resultBox {
@@ -254,7 +264,7 @@ footer h2 { font-family: "Orbitron", sans-serif; color: white; margin-bottom: 20
         left: 0;
         top: 0;
         width: 100%;
-        height: 100%; /* Locks to 1 page */
+        height: 100%; /* Locks to exactly 1 page */
         max-height: 100vh;
         background: white !important;
         color: black !important;
@@ -266,8 +276,6 @@ footer h2 { font-family: "Orbitron", sans-serif; color: white; margin-bottom: 20
         display: flex;
         flex-direction: column;
         justify-content: center;
-        page-break-after: avoid;
-        page-break-before: avoid;
     }
     
     /* Reveal the hidden official header */
