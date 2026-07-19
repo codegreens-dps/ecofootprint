@@ -1,37 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&display=swap"); /* arial is for boomers so we are using this sick techy font iter found on stackoverflow */
 
-:root { 
-    --green: #00ff66; /* UPGRADED: True pure neon green */
-    --bg-dark: #050a06; /* Shifted from pure black to a very deep cyber-green tint */
-    --card-dark: rgba(10, 10, 10, 0.65); /* Made transparent for frosted glass effect */
-    --orange: #ff3c00; /* UPGRADED: Aggressive neon orange/red */
-    --yellow: #ffe600; /* UPGRADED: Radioactive neon yellow */
-    --border-thick: 2px solid var(--green); 
-    --shadow-size: 8px; 
-} 
+:root { --green: #00ff66; /* UPGRADED: True pure neon green */ --bg-dark: #050a06; /* Shifted from pure black to a very deep cyber-green tint */ --card-dark: rgba(10, 10, 10, 0.65); /* Made transparent for frosted glass effect */ --orange: #ff3c00; /* UPGRADED: Aggressive neon orange/red */ --yellow: #ffe600; /* UPGRADED: Radioactive neon yellow */ --border-thick: 2px solid var(--green); --shadow-size: 8px; } 
 
-* { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
-} 
+* { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); } 
 
-body { 
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-    background-color: var(--bg-dark); 
-    color: white; 
-    overflow-x: hidden; 
-    cursor: crosshair; 
-    /* MAXIMUM POP: Doubled the glow opacity, widened the spread, and brightened the matrix grid */
-    background-image: 
-        radial-gradient(circle at 50% 0%, rgba(0, 255, 102, 0.45) 0%, transparent 60%), 
-        linear-gradient(rgba(0, 255, 102, 0.15) 1px, transparent 1px), 
-        linear-gradient(90deg, rgba(0, 255, 102, 0.15) 1px, transparent 1px); 
-    background-size: 100% 100%, 40px 40px, 40px 40px; 
-    background-attachment: fixed;
-    line-height: 1.6; 
-} 
+body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg-dark); color: white; overflow-x: hidden; cursor: crosshair; line-height: 1.6; background-attachment: fixed; /* MAXIMUM POP: Doubled the glow opacity, widened the spread, and brightened the matrix grid */ background-image: radial-gradient(circle at 50% 0%, rgba(0, 255, 102, 0.45) 0%, transparent 60%), linear-gradient(rgba(0, 255, 102, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 102, 0.15) 1px, transparent 1px); background-size: 100% 100%, 40px 40px, 40px 40px; } 
 
 ::selection { background-color: var(--green); color: black; text-shadow: none; } 
 
@@ -41,72 +14,23 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: var(--orange); }
 
 /* --- FLOATING A+ RATING BADGE (Bottom Left HUD) --- */
-.website-carbon-floating { 
-    position: fixed; 
-    bottom: 30px; 
-    left: 30px; 
-    background-color: rgba(5, 5, 5, 0.85); 
-    -webkit-backdrop-filter: blur(15px); 
-    backdrop-filter: blur(15px); 
-    border: 1px solid rgba(0, 255, 102, 0.8); 
-    border-left: 8px solid var(--green); 
-    padding: 20px 25px; 
-    box-shadow: 0 10px 50px rgba(0,255,102,0.4), inset 0 0 25px rgba(0,0,0,0.9); 
-    z-index: 9999; 
-    animation: floatInfinite 5s ease-in-out infinite alternate-reverse; 
-    border-radius: 6px; 
-    display: flex; 
-    align-items: center; 
-    gap: 18px; 
-    max-width: 320px; 
-}
+.website-carbon-floating { position: fixed; bottom: 30px; left: 30px; background-color: rgba(5, 5, 5, 0.85); -webkit-backdrop-filter: blur(15px); backdrop-filter: blur(15px); border: 1px solid rgba(0, 255, 102, 0.8); border-left: 8px solid var(--green); padding: 20px 25px; box-shadow: 0 10px 50px rgba(0,255,102,0.4), inset 0 0 25px rgba(0,0,0,0.9); z-index: 9999; animation: floatInfinite 5s ease-in-out infinite alternate-reverse; border-radius: 6px; display: flex; align-items: center; gap: 18px; max-width: 320px; }
 .website-carbon-floating::before { content: '● CERTIFIED'; color: var(--green); font-family: monospace; font-size: 0.7rem; position: absolute; top: 5px; left: 10px; animation: pulseMode 2s infinite; opacity: 0.8; letter-spacing: 1px; }
-.website-carbon-floating .badge { 
-    background-color: var(--green); color: black; font-family: "Orbitron", sans-serif; font-weight: 900; 
-    padding: 10px 14px; border-radius: 4px; box-shadow: 0 0 25px var(--green); 
-    animation: glowPulse 2.5s infinite alternate; letter-spacing: 1px; flex-shrink: 0; font-size: 1.4rem; line-height: 1;
-}
+.website-carbon-floating .badge { background-color: var(--green); color: black; font-family: "Orbitron", sans-serif; font-weight: 900; padding: 10px 14px; border-radius: 4px; box-shadow: 0 0 25px var(--green); animation: glowPulse 2.5s infinite alternate; letter-spacing: 1px; flex-shrink: 0; font-size: 1.4rem; line-height: 1; }
 .carbon-text-wrap { display: flex; flex-direction: column; }
 .carbon-text-wrap strong { color: var(--green); text-shadow: 0 0 12px rgba(0,255,102,0.8); font-size: 1.05rem; line-height: 1.2; text-transform: uppercase; font-family: "Orbitron", sans-serif; }
 .carbon-text-wrap span { font-size: 0.85rem; font-weight: 600; color: #eee; line-height: 1.4; margin-top: 4px; }
 .tested-date { color: #888 !important; font-size: 0.75rem !important; font-family: monospace; display: block; margin-top: 6px; }
 
 /* --- UPGRADED: ENLARGED LOCAL INTENSITY API DASHBOARD PANEL --- */
-.api-card { 
-    background-color: rgba(10, 10, 10, 0.85); 
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    border: 2px solid rgba(255, 230, 0, 0.7); 
-    border-top: 8px solid var(--yellow);
-    padding: 50px 60px; /* Vastly increased padding */
-    width: 95%; 
-    max-width: 1400px; /* Expanded for a huge central dashboard */
-    box-shadow: 0 30px 80px rgba(0,0,0,0.9), 0 0 80px rgba(255,230,0,0.25); 
-    border-radius: 12px; 
-    display: grid; 
-    grid-template-columns: 1fr 1.5fr; 
-    grid-template-rows: auto auto;
-    gap: 30px 60px; 
-    animation: floatInfinite 5s ease-in-out infinite alternate; 
-    cursor: crosshair; 
-    position: relative;
-    margin: 60px auto;
-}
+.api-card { background-color: rgba(10, 10, 10, 0.85); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border: 2px solid rgba(255, 230, 0, 0.7); border-top: 8px solid var(--yellow); padding: 50px 60px; /* Vastly increased padding */ width: 95%; max-width: 1400px; /* Expanded for a huge central dashboard */ box-shadow: 0 30px 80px rgba(0,0,0,0.9), 0 0 80px rgba(255,230,0,0.25); border-radius: 12px; display: grid; grid-template-columns: 1fr 1.5fr; grid-template-rows: auto auto; gap: 30px 60px; animation: floatInfinite 5s ease-in-out infinite alternate; cursor: crosshair; position: relative; margin: 60px auto; }
 .api-card::after { content: 'LIVE DATA FEED'; position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: var(--yellow); color: black; font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 900; padding: 6px 20px; border-radius: 4px; letter-spacing: 1px; }
 .api-card:hover { transform: translateY(-10px) scale(1.01); box-shadow: 0 35px 90px rgba(0,0,0,0.95), 0 0 100px rgba(0,255,102,0.4); border-color: rgba(0, 255, 102, 0.8); border-top-color: var(--green); animation: none; z-index: 10; }
 .api-card:hover::after { background: var(--green); box-shadow: 0 0 25px var(--green); content: 'SYSTEM SECURE'; }
 .api-card h3 { grid-column: 1 / 2; text-align: left; align-self: end; margin: 0; font-family: "Orbitron", sans-serif; color: white; font-size: 2.2rem; text-transform: uppercase; font-weight: 800; line-height: 1.2; text-shadow: 0 2px 6px rgba(0,0,0,0.7); }
-.api-card select { 
-    grid-column: 1 / 2; align-self: start;
-    background: rgba(0,0,0,0.9); color: white; border: 1px solid rgba(255,230,0,0.6); padding: 22px; 
-    font-family: monospace; font-weight: bold; outline: none; cursor: pointer; 
-    box-shadow: inset 0 0 20px rgba(0,0,0,1); transition: all 0.2s; border-radius: 6px; font-size: 1.3rem; width: 100%; text-align: center; letter-spacing: 1px;
-}
+.api-card select { grid-column: 1 / 2; align-self: start; background: rgba(0,0,0,0.9); color: white; border: 1px solid rgba(255,230,0,0.6); padding: 22px; font-family: monospace; font-weight: bold; outline: none; cursor: pointer; box-shadow: inset 0 0 20px rgba(0,0,0,1); transition: all 0.2s; border-radius: 6px; font-size: 1.3rem; width: 100%; text-align: center; letter-spacing: 1px; }
 .api-card select:focus { border-color: var(--green); box-shadow: 0 0 35px rgba(0,255,102,0.5); transform: scale(1.02); }
-.intensity-display { 
-    grid-column: 2 / 3; grid-row: 1 / 3; margin: 0;
-    background: rgba(0,0,0,0.7); border: 2px dashed rgba(255,230,0,0.8); padding: 40px; border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,1); display: flex; flex-direction: column; justify-content: center; gap: 20px; height: 100%; 
-}
+.intensity-display { grid-column: 2 / 3; grid-row: 1 / 3; margin: 0; background: rgba(0,0,0,0.7); border: 2px dashed rgba(255,230,0,0.8); padding: 40px; border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,1); display: flex; flex-direction: column; justify-content: center; gap: 20px; height: 100%; }
 .intensity-readout { font-family: monospace; color: white; text-align: center; display: flex; align-items: baseline; justify-content: center; gap: 12px; }
 #intensityValue { font-size: 5.5rem; font-weight: 900; color: var(--green); text-shadow: 0 0 35px var(--green); line-height: 1; transition: color 0.5s ease; }
 .meter-wrapper { width: 100%; height: 24px; background-color: #111; border-radius: 12px; overflow: hidden; border: 1px solid #333; box-shadow: inset 0 4px 10px rgba(0,0,0,0.9); margin: 15px 0; }
@@ -114,28 +38,14 @@ body {
 .intensity-status { font-size: 1.4rem; font-family: "Orbitron", sans-serif; font-weight: 700; text-align: center; text-transform: uppercase; letter-spacing: 2px; transition: color 0.5s ease; }
 
 /* --- NAVIGATION --- */
-.top-nav { 
-    background-color: rgba(2, 5, 2, 0.85); -webkit-backdrop-filter: blur(15px); backdrop-filter: blur(15px); 
-    border-bottom: 1px solid rgba(0, 255, 102, 0.6); padding: 18px 40px; display: flex; justify-content: space-between; 
-    align-items: center; position: sticky; top: 0; z-index: 99999; box-shadow: 0 10px 50px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 255, 102, 0.15); 
-} 
-.site-logo { 
-    font-family: "Orbitron", sans-serif; font-size: 26px; font-weight: 900; color: white; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 25px var(--green); position: relative; overflow: hidden; display: inline-block; padding-right: 15px; 
-    -webkit-user-select: none; /* Safarai */
-    user-select: none; /* Standard */
-} 
+.top-nav { background-color: rgba(2, 5, 2, 0.85); -webkit-backdrop-filter: blur(15px); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(0, 255, 102, 0.6); padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 99999; box-shadow: 0 10px 50px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 255, 102, 0.15); } 
+.site-logo { font-family: "Orbitron", sans-serif; font-size: 26px; font-weight: 900; color: white; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 25px var(--green); position: relative; overflow: hidden; display: inline-block; padding-right: 15px; -webkit-user-select: none; /* Safarai */ user-select: none; /* Standard */ } 
 .site-logo::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(0,255,102,0.9), transparent); transform: skewX(-20deg); animation: logoShine 4s infinite; } 
 .top-nav nav a { color: #ccc; text-decoration: none; font-weight: 700; margin-left: 30px; cursor: pointer; display: inline-block; font-size: 1.05rem; letter-spacing: 0.5px; }
 .top-nav nav a:hover { color: var(--green); transform: translateY(-3px); text-shadow: 0 0 20px var(--green); } 
 
 /* --- BANNER (Glowing Reactor Core POP) --- */
-.banner { 
-    background-color: #020502; /* Deep reactor black */
-    /* POP UPGRADE: Pushed opacity from 0.4 to 0.65, added brighter repeating scanlines */
-    background-image: radial-gradient(circle at 50% 100%, rgba(0, 255, 102, 0.65) 0%, transparent 80%), repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 10px); 
-    color: white; text-align: center; padding: 120px 20px; border-bottom: 2px solid rgba(0,255,102,0.6); 
-    position: relative; box-shadow: inset 0 -50px 100px rgba(0,0,0,1); 
-} 
+.banner { background-color: #020502; /* Deep reactor black */ /* POP UPGRADE: Pushed opacity from 0.4 to 0.65, added brighter repeating scanlines */ background-image: radial-gradient(circle at 50% 100%, rgba(0, 255, 102, 0.65) 0%, transparent 80%), repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 10px); color: white; text-align: center; padding: 120px 20px; border-bottom: 2px solid rgba(0,255,102,0.6); position: relative; box-shadow: inset 0 -50px 100px rgba(0,0,0,1); } 
 .banner h1 { font-family: "Orbitron", sans-serif; font-size: 4.8rem; margin-bottom: 30px; color: white; text-shadow: 0 0 50px rgba(0,255,102,1), 0 0 20px rgba(0,255,102,0.8); animation: fadeInUp 0.8s ease-out, floatInfinite 6s ease-in-out infinite alternate; letter-spacing: -1px; line-height: 1.1; max-width: 1100px; margin-left: auto; margin-right: auto; text-transform: uppercase; } 
 .banner p { font-size: 1.4rem; max-width: 800px; margin: 0 auto 50px auto; font-weight: 600; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,1); line-height: 1.8; }
 .big-btn { font-family: "Orbitron", sans-serif; display: inline-block; background-color: transparent; color: var(--green); padding: 20px 50px; font-size: 1.4rem; font-weight: 800; text-decoration: none; border: 2px solid var(--green); box-shadow: 0 0 35px rgba(0,255,102,0.5), inset 0 0 25px rgba(0,255,102,0.3); cursor: pointer; border-radius: 4px; text-transform: uppercase; letter-spacing: 1px; backdrop-filter: blur(5px); } 
@@ -149,14 +59,7 @@ body {
 #landfillCounter { color: var(--green); font-size: 4rem; font-weight: 900; text-shadow: 0 0 40px rgba(0,255,102,1); background: rgba(0,0,0,0.7); padding: 15px 20px; border: 1px dashed rgba(0,255,102,0.8); border-radius: 6px; width: 100%; display: inline-block; line-height: 1; box-shadow: inset 0 0 25px rgba(0,0,0,1); }
 
 /* --- CORE THREATS (Hazard Zone Atmosphere POP) --- */
-.threats-wrapper { 
-    padding: 120px 20px; 
-    background-color: #0d0300; /* Shifted to a hyper-dark red void */
-    /* POP UPGRADE: Doubled orange bleed opacity, increased scanline visibility */
-    background-image: radial-gradient(circle at center, rgba(255, 60, 0, 0.35) 0%, transparent 85%), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 50px); 
-    box-shadow: inset 0 20px 80px rgba(0,0,0,1); 
-    position: relative; 
-} 
+.threats-wrapper { padding: 120px 20px; background-color: #0d0300; /* Shifted to a hyper-dark red void */ /* POP UPGRADE: Doubled orange bleed opacity, increased scanline visibility */ background-image: radial-gradient(circle at center, rgba(255, 60, 0, 0.35) 0%, transparent 85%), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 50px); box-shadow: inset 0 20px 80px rgba(0,0,0,1); position: relative; } 
 .main-heading { font-family: "Orbitron", sans-serif; color: white; text-align: center; font-size: 3.5rem; margin-bottom: 70px; text-transform: uppercase; text-shadow: 0 0 35px rgba(255,60,0,0.9); letter-spacing: 1px; } 
 .main-heading::after { content: ''; display: block; width: 120px; height: 5px; background: var(--green); margin: 15px auto 0 auto; box-shadow: 0 0 25px var(--green); }
 
@@ -169,19 +72,7 @@ body {
 .info-box:hover .box-emoji { transform: scale(1.2) translateY(-10px); filter: drop-shadow(0 0 35px rgba(255,60,0,1)); } 
 
 /* --- SIMULATOR (Tactical Wireframe POP) --- */
-.sim-area { 
-    padding: 120px 20px; 
-    border-top: 2px solid rgba(0,255,102,0.6); 
-    border-bottom: 2px solid rgba(0,255,102,0.6); 
-    background-color: #000a05; /* Shifted base to an abyss-green */
-    /* POP UPGRADE: Brighter, more visible neon wireframe lines and a central glow */
-    background-image: 
-        repeating-linear-gradient(45deg, rgba(0, 255, 102, 0.08) 0px, rgba(0, 255, 102, 0.08) 2px, transparent 2px, transparent 30px), 
-        repeating-linear-gradient(-45deg, rgba(0, 255, 102, 0.08) 0px, rgba(0, 255, 102, 0.08) 2px, transparent 2px, transparent 30px), 
-        radial-gradient(circle at 50% 50%, rgba(0,255,102,0.15) 0%, #000 100%); 
-    animation: panGrid 30s linear infinite; 
-    box-shadow: inset 0 0 120px rgba(0,0,0,1); 
-} 
+.sim-area { padding: 120px 20px; border-top: 2px solid rgba(0,255,102,0.6); border-bottom: 2px solid rgba(0,255,102,0.6); background-color: #000a05; /* Shifted base to an abyss-green */ /* POP UPGRADE: Brighter, more visible neon wireframe lines and a central glow */ background-image: repeating-linear-gradient(45deg, rgba(0, 255, 102, 0.08) 0px, rgba(0, 255, 102, 0.08) 2px, transparent 2px, transparent 30px), repeating-linear-gradient(-45deg, rgba(0, 255, 102, 0.08) 0px, rgba(0, 255, 102, 0.08) 2px, transparent 2px, transparent 30px), radial-gradient(circle at 50% 50%, rgba(0,255,102,0.15) 0%, #000 100%); animation: panGrid 30s linear infinite; box-shadow: inset 0 0 120px rgba(0,0,0,1); } 
 .sim-area .main-heading { color: white; text-shadow: 0 0 35px rgba(0,255,102,0.9); }
 .sim-area .main-heading::after { background: var(--orange); box-shadow: 0 0 25px var(--orange); }
 
@@ -204,17 +95,7 @@ body {
 .btn-retry:hover { background-color: var(--yellow); color: black; transform: translateY(-3px); box-shadow: 0 10px 35px rgba(255,230,0,0.6), 0 0 30px var(--yellow); }
 
 /* --- GIVE & TAKE BOARD (Gold Blueprint Matrix POP) --- */
-.board-area { 
-    padding: 120px 20px; 
-    background-color: #0a0900; /* Shifted base to a radioactive dark gold */
-    /* POP UPGRADE: Bleeding center glow and vastly more visible gridlines */
-    background-image: 
-        linear-gradient(rgba(255, 230, 0, 0.1) 1px, transparent 1px), 
-        linear-gradient(90deg, rgba(255, 230, 0, 0.1) 1px, transparent 1px), 
-        radial-gradient(circle at center, transparent 20%, #000 100%); 
-    background-size: 30px 30px, 30px 30px, 100% 100%; 
-    box-shadow: inset 0 20px 80px rgba(0,0,0,1); 
-} 
+.board-area { padding: 120px 20px; background-color: #0a0900; /* Shifted base to a radioactive dark gold */ /* POP UPGRADE: Bleeding center glow and vastly more visible gridlines */ background-image: linear-gradient(rgba(255, 230, 0, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 230, 0, 0.1) 1px, transparent 1px), radial-gradient(circle at center, transparent 20%, #000 100%); background-size: 30px 30px, 30px 30px, 100% 100%; box-shadow: inset 0 20px 80px rgba(0,0,0,1); } 
 .board-area .main-heading { text-shadow: 0 0 35px rgba(255,230,0,0.8); }
 .board-area .main-heading::after { background: var(--yellow); box-shadow: 0 0 25px var(--yellow); }
 
@@ -283,11 +164,7 @@ footer h2 { font-family: "Orbitron", sans-serif; color: white; margin-bottom: 20
     .banner h1 { font-size: 3.2rem; } 
     .banner p { font-size: 1.2rem; }
     
-    .website-carbon-floating, .stats-banner { 
-        position: relative; bottom: auto; left: auto; right: auto; 
-        width: 100%; max-width: 450px; margin: 40px auto; 
-        animation: none; box-shadow: 0 15px 35px rgba(0,0,0,0.9); 
-    } 
+    .website-carbon-floating, .stats-banner { position: relative; bottom: auto; left: auto; right: auto; width: 100%; max-width: 450px; margin: 40px auto; animation: none; box-shadow: 0 15px 35px rgba(0,0,0,0.9); } 
     .website-carbon-floating { flex-direction: column; text-align: center; padding: 30px; }
     .carbon-text-wrap { align-items: center; }
     
@@ -298,27 +175,6 @@ footer h2 { font-family: "Orbitron", sans-serif; color: white; margin-bottom: 20
 }
 
 /* Winner Mode Effects */
-.winner-mode {
-    animation: flashColors 0.5s infinite;
-}
-
-.victory-banner {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.9);
-    z-index: 999999;
-    text-align: center;
-    pointer-events: none; /* Allows clicking through if needed */
-}
-
-@keyframes flashColors {
-    0% { filter: hue-rotate(0deg); }
-    50% { filter: hue-rotate(180deg); }
-    100% { filter: hue-rotate(360deg); }
-}
+.winner-mode { animation: flashColors 0.5s infinite; }
+.victory-banner { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.9); z-index: 999999; text-align: center; pointer-events: none; /* Allows clicking through if needed */ }
+@keyframes flashColors { 0% { filter: hue-rotate(0deg); } 50% { filter: hue-rotate(180deg); } 100% { filter: hue-rotate(360deg); } }
