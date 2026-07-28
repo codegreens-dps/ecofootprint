@@ -7,11 +7,11 @@ const firebaseApp = initializeApp(conf);
 const database = getFirestore(firebaseApp);
 
 /* Anti-XSS Sanitizer */
+const sanitizerNode = document.createElement('div');
 const cln = (s) => { 
     if(!s) return ""; 
-    const d = document.createElement('div'); 
-    d.textContent = s; 
-    return d.innerHTML; 
+    sanitizerNode.textContent = s; 
+    return sanitizerNode.innerHTML; 
 };
 
 /* --- KONAMI CODE ENGINE --- */
@@ -42,7 +42,7 @@ document.addEventListener('keydown', (e) => {
     } else {
         konamiPosition = 0;
     }
-});
+}, { passive: true });
 
 /* --- SYSTEM INITIALIZATION --- */
 // Switched to DOMContentLoaded - it fires earlier than window.onload for a snappier feel
@@ -80,21 +80,23 @@ window.addEventListener('DOMContentLoaded', () => {
                 
                 if (meterFill && statusDisplay) {
                     const pct = Math.min((intensity / 800) * 100, 100); 
-                    meterFill.style.width = `${pct}%`;
-                    
-                    if (intensity < 250) { 
-                        meterFill.style.backgroundColor = "var(--green)"; 
-                        statusDisplay.innerText = "Grid is looking clean today! 🌿"; 
-                        statusDisplay.style.color = "var(--green)"; 
-                    } else if (intensity < 550) { 
-                        meterFill.style.backgroundColor = "var(--yellow)"; 
-                        statusDisplay.innerText = "Moderate emissions. Meh. 🤷‍♂️"; 
-                        statusDisplay.style.color = "var(--yellow)"; 
-                    } else { 
-                        meterFill.style.backgroundColor = "var(--red)"; 
-                        statusDisplay.innerText = "Grid is literally coughing smog. 🏭"; 
-                        statusDisplay.style.color = "var(--red)"; 
-                    }
+                    requestAnimationFrame(() => {
+                        meterFill.style.width = `${pct}%`;
+                        
+                        if (intensity < 250) { 
+                            meterFill.style.backgroundColor = "var(--green)"; 
+                            statusDisplay.innerText = "Grid is looking clean today! 🌿"; 
+                            statusDisplay.style.color = "var(--green)"; 
+                        } else if (intensity < 550) { 
+                            meterFill.style.backgroundColor = "var(--yellow)"; 
+                            statusDisplay.innerText = "Moderate emissions. Meh. 🤷‍♂️"; 
+                            statusDisplay.style.color = "var(--yellow)"; 
+                        } else { 
+                            meterFill.style.backgroundColor = "var(--red)"; 
+                            statusDisplay.innerText = "Grid is literally coughing smog. 🏭"; 
+                            statusDisplay.style.color = "var(--red)"; 
+                        }
+                    });
                 }
             }
         } catch (err) {
@@ -220,16 +222,18 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Update DOM exactly once
-        b.innerHTML = i_c === 0 ? "<h3 style='width:100%;text-align:center;color:var(--green);' class='blink-text'>No items available right now. Be the first to list something!</h3>" : boardHTML;
-        l.innerHTML = c_c === 0 ? "<li class='empty-state'>No items claimed yet... be the first!</li>" : listHTML;
+        // Update DOM exactly once on animation frame to eliminate layout thrashing
+        requestAnimationFrame(() => {
+            b.innerHTML = i_c === 0 ? "<h3 style='width:100%;text-align:center;color:var(--green);' class='blink-text'>No items available right now. Be the first to list something!</h3>" : boardHTML;
+            l.innerHTML = c_c === 0 ? "<li class='empty-state'>No items claimed yet... be the first!</li>" : listHTML;
 
-        // Gamification Metric
-        const el = document.getElementById('landfillCounter'); 
-        if (el) {
-            const co2Saved = (c_c * 4.5).toFixed(1); 
-            el.innerHTML = `${c_c}<div style='font-size: 0.35em; color: var(--yellow); text-shadow: 0 0 10px rgba(255,230,0,0.5); margin-top: 12px; font-family: monospace; letter-spacing: 0px;'>~${co2Saved} kg CO₂ saved!</div>`;
-        }
+            // Gamification Metric
+            const el = document.getElementById('landfillCounter'); 
+            if (el) {
+                const co2Saved = (c_c * 4.5).toFixed(1); 
+                el.innerHTML = `${c_c}<div style='font-size: 0.35em; color: var(--yellow); text-shadow: 0 0 10px rgba(255,230,0,0.5); margin-top: 12px; font-family: monospace; letter-spacing: 0px;'>~${co2Saved} kg CO₂ saved!</div>`;
+            }
+        });
     });
 
     /* --- ADD ITEM POSTING --- */
