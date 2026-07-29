@@ -19,19 +19,28 @@ hi anyone seeing this try konami code it works-->
     <title>EcoFootprint | CodeGreens</title>
 
     <!-- lighthouse yelled at me so preloading these -->
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com"><link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link rel="preload" href="style.css" as="style"><link href="style.css" rel="stylesheet">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="preload" href="style.css" as="style">
+    <link href="style.css" rel="stylesheet">
     
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <!-- Failsafe styles to bridge any remaining CSS/JS naming gaps -->
+    <style>
+        #landfillCounter { color: var(--green); font-size: 4rem; font-weight: 900; text-shadow: 0 0 40px rgba(0,255,102,1); background: rgba(0,0,0,0.7); padding: 15px 20px; border: 1px dashed rgba(0,255,102,0.8); border-radius: 6px; width: 100%; display: inline-block; line-height: 1; box-shadow: inset 0 0 25px rgba(0,0,0,1); }
+        .lister-name { font-weight: 700; color: #888; margin-bottom: 20px; font-size: 1rem; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 15px; }
+        .lister-name span { color: var(--org); text-shadow: 0 0 10px rgba(255,60,0,0.4); }
+    </style>
 </head>
 <body class="neo_brutalist_theme">
 
     <button id="secretbtn" style="opacity: 0.01; position: absolute; top: 5px; left: 5px; cursor: crosshair;" onclick="alert('+aura for clicking the secret btn')">.</button>
 
     <header class='top-nav neo-box-shadow'>
-        <h2 class="logo-hov" data-text="🌿 EcoFootprint" title='double click for the secret mode' ondblclick="activateWinnerProtocol()">🌿 EcoFootprint</h2>
+        <h2 class="site-logo" data-text="🌿 EcoFootprint" title='double click for the secret mode' ondblclick="activateWinnerProtocol()">🌿 EcoFootprint</h2>
         
         <nav class="nav-links">
             <!-- flex gap wasn't working in safari so I just added manual spaces. fight me. -->
@@ -57,7 +66,6 @@ hi anyone seeing this try konami code it works-->
             </select>
 
             <div id="int-disp" class="int-disp">
-                <!-- changed IDs to match CSS rewrite, need to update JS fetch func if it breaks -->
                 <div class="int-readout"><span id="int-val" class="loading-pulse">Loading...</span> <small class="mono-text">gCO₂eq/kWh</small></div>
                 <div class="mtr-wrap neo-border" title="Lower is greener!"><div id="intensityMeterFill" class="mtr-fill striped-bg"></div></div>
                 <div id="intensityStatus" class="int-stat blink-text">Checking grid health...</div>
@@ -147,7 +155,7 @@ hi anyone seeing this try konami code it works-->
                     </select>
                 </div>
 
-                <button type="submit" id="submitBtn" class="sub-btn brutal-btn" title="Clicking this saves 1 virtual polar bear dont judge me"><span class="btn-text">SEE MY CLIMATE IMPACT</span></button>
+                <button type="submit" id="submitBtn" class="submit-button brutal-btn" title="Clicking this saves 1 virtual polar bear dont judge me"><span class="btn-text">SEE MY CLIMATE IMPACT</span></button>
             </form>
 
             <div id="resultBox" class="end-screen" style="display: none;">
@@ -176,7 +184,7 @@ hi anyone seeing this try konami code it works-->
         <h2 class="main-heading highlight-text">♻️ The Give & Take Board ♻️</h2>
         
         <div class='stat-ban neo-card floating-hud-right'>
-            <h3>Items Diverted:<br><span id="land-count" class="counter-ticker">0</span></h3>
+            <h3>Items Diverted:<br><span id="landfillCounter" class="counter-ticker">0</span></h3>
         </div>
         <p class="sub-text mono-text">List your unused items or find something you need. Reusing items helps reduce overall waste in our community.</p>
 
