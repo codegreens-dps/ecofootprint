@@ -69,7 +69,7 @@ body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Ro
 
 /* --- CORE THREATS --- */
 .threats-wrapper { padding: 120px 20px; background-color: #0d0300; background-image: radial-gradient(circle at center, rgba(255, 60, 0, 0.35) 0%, transparent 85%), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 50px); box-shadow: inset 0 20px 80px rgba(0,0,0,1); position: relative; } 
-#onePercentBtn {position: fixed;top: 5px;left: 5px;opacity: 0.01;z-index: 1000000;width: 20px;height: 20px;border: none;background: transparent;cursor: crosshair;}
+#secretbtn {position: fixed;top: 5px;left: 5px;opacity: 0.01;z-index: 1000000;width: 20px;height: 20px;border: none;background: transparent;cursor: crosshair;}
 .main-heading { font-family: "Orbitron", sans-serif; color: white; text-align: center; font-size: 3.5rem; margin-bottom: 70px; text-transform: uppercase; text-shadow: 0 0 35px rgba(255,60,0,0.9); letter-spacing: 1px; } 
 .main-heading::after { content: ''; display: block; width: 120px; height: 5px; background: var(--green); margin: 15px auto 0 auto; box-shadow: 0 0 25px var(--green); }
 .flex-boxes { display: flex; justify-content: center; align-items: stretch; gap: 40px; flex-wrap: wrap; max-width: 1300px; margin: 0 auto; } 
