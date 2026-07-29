@@ -1,70 +1,70 @@
+// TODO: move off cdn imports before prod
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, updateDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+import { 
+    getFirestore, collection, addDoc, onSnapshot, 
+    query, orderBy, updateDoc, doc, serverTimestamp 
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 /* DO NOT TOUCH THE CONFIG OR THE DB EXPLODES */
 const conf = {apiKey:"AIzaSyBNO8SiOBW49CqL7YgHd572pF9mikE7ABo",authDomain:"ecofootprint-9c4ed.firebaseapp.com",projectId:"ecofootprint-9c4ed",storageBucket:"ecofootprint-9c4ed.firebasestorage.app",messagingSenderId:"425267033599",appId:"1:425267033599:web:3554770c24a204594ba3ca",measurementId:"G-NCNFZTHKS4"};
-const firebaseApp = initializeApp(conf);
-const database = getFirestore(firebaseApp);
+const fb_app = initializeApp(conf);
+const db = getFirestore(fb_app);
 
-/* Anti-XSS Sanitizer */
-const sanitizerNode = document.createElement('div');
+// dumb innerHTML hack for xss
+const san_node = document.createElement('div');
 const cln = (s) => { 
     if(!s) return ""; 
-    sanitizerNode.textContent = s; 
-    return sanitizerNode.innerHTML; 
+    san_node.textContent = s; 
+    return san_node.innerHTML; 
 };
 
-/* --- KONAMI CODE ENGINE --- */
-const konamiCode = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a']; 
-let konamiPosition = 0;
+// lol konami
+const k_code = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a']; 
+let k_idx = 0;
 
 document.addEventListener('keydown', (e) => {
-    const pressedKey = e.key.toLowerCase();
+    const pk = e.key.toLowerCase();
     
-    if (pressedKey === konamiCode[konamiPosition]) {
-        konamiPosition++;
-        console.log(`[SYS] Konami sequence: ${konamiPosition}/${konamiCode.length}`);
+    if (pk === k_code[k_idx]) {
+        k_idx++;
+        console.log(`[SYS] Konami sequence: ${k_idx}/${k_code.length}`);
         
-        if (konamiPosition === konamiCode.length) {
+        if (k_idx === k_code.length) {
             console.log("[SYS] OVERRIDE ACCEPTED. Konami Activated!");
             
-            const modal = document.getElementById('konami-modal');
-            if (modal) modal.style.display = 'flex';
+            const mod = document.getElementById('konami-modal');
+            if (mod) mod.style.display = 'flex';
             document.body.classList.add('winner-mode');
             
             setTimeout(() => {
                 document.body.classList.remove('winner-mode');
-                if (modal) modal.style.display = 'none';
+                if (mod) mod.style.display = 'none';
             }, 5000);
             
-            konamiPosition = 0; 
+            k_idx = 0; 
         }
-    } else {
-        konamiPosition = 0;
-    }
+    } else { k_idx = 0; }
 }, { passive: true });
 
-/* --- SYSTEM INITIALIZATION --- */
-// Switched to DOMContentLoaded - it fires earlier than window.onload for a snappier feel
+// DOMContentLoaded > onload. users have no patience
 window.addEventListener('DOMContentLoaded', () => { 
     
-    /* --- GRID INTENSITY API --- */
-    const fetchCarbonIntensity = async (zone) => {
-        const valDisplay = document.getElementById("intensityValue");
-        const meterFill = document.getElementById("intensityMeterFill");
-        const statusDisplay = document.getElementById("intensityStatus");
+    const fetch_carbon = async (zone) => {
+        const val_disp = document.getElementById("intensityValue");
+        const mtr_fill = document.getElementById("intensityMeterFill");
+        const stat_disp = document.getElementById("intensityStatus");
         
         // Easter Egg: Mars Colony Alpha
         if (zone === "MARS") {
-            if (valDisplay) valDisplay.innerText = "-42";
-            if (meterFill) { meterFill.style.width = "100%"; meterFill.style.backgroundColor = "#ff4500"; }
-            if (statusDisplay) { statusDisplay.innerText = "Elon approves. 100% Nuclear/Solar. 🚀"; statusDisplay.style.color = "#ff4500"; }
+            if (val_disp) val_disp.innerText = "-42";
+            if (mtr_fill) { mtr_fill.style.width = "100%"; mtr_fill.style.backgroundColor = "#ff4500"; }
+            if (stat_disp) { stat_disp.innerText = "Elon approves. 100% Nuclear/Solar. 🚀"; stat_disp.style.color = "#ff4500"; }
             return;
         }
 
-        if (valDisplay) valDisplay.innerText = "Loading..."; 
-        if (meterFill) meterFill.style.width = "0%";
-        if (statusDisplay) { statusDisplay.innerText = "Checking grid health..."; statusDisplay.style.color = "var(--text-color)"; }
+        if (val_disp) val_disp.innerText = "Loading..."; 
+        if (mtr_fill) mtr_fill.style.width = "0%";
+        if (stat_disp) { stat_disp.innerText = "Checking grid health..."; stat_disp.style.color = "var(--text-color)"; }
 
         try {
             const dataUrl = `./data/${zone}.json`;
@@ -76,74 +76,82 @@ window.addEventListener('DOMContentLoaded', () => {
             
             if (data?.carbonIntensity !== undefined) {
                 const intensity = data.carbonIntensity; 
-                if (valDisplay) valDisplay.innerText = intensity;
+                if (val_disp) val_disp.innerText = intensity;
                 
-                if (meterFill && statusDisplay) {
-                    const pct = Math.min((intensity / 800) * 100, 100); 
+                if (mtr_fill && stat_disp) {
+                    // doing this manually cuz Math.min was being weird in testing
+                    let pct = (intensity / 800) * 100;
+                    if (pct > 100) {
+                        pct = 100;
+                    }
+
                     requestAnimationFrame(() => {
-                        meterFill.style.width = `${pct}%`;
+                        mtr_fill.style.width = `${pct}%`;
                         
                         if (intensity < 250) { 
-                            meterFill.style.backgroundColor = "var(--green)"; 
-                            statusDisplay.innerText = "Grid is looking clean today! 🌿"; 
-                            statusDisplay.style.color = "var(--green)"; 
+                            mtr_fill.style.backgroundColor = "var(--green)"; 
+                            stat_disp.innerText = "Grid is looking clean today! 🌿"; 
+                            stat_disp.style.color = "var(--green)"; 
                         } else if (intensity < 550) { 
-                            meterFill.style.backgroundColor = "var(--yellow)"; 
-                            statusDisplay.innerText = "Moderate emissions. Meh. 🤷‍♂️"; 
-                            statusDisplay.style.color = "var(--yellow)"; 
+                            mtr_fill.style.backgroundColor = "var(--yellow)"; 
+                            stat_disp.innerText = "Moderate emissions. Meh. 🤷‍♂️"; 
+                            stat_disp.style.color = "var(--yellow)"; 
                         } else { 
-                            meterFill.style.backgroundColor = "var(--red)"; 
-                            statusDisplay.innerText = "Grid is literally coughing smog. 🏭"; 
-                            statusDisplay.style.color = "var(--red)"; 
+                            mtr_fill.style.backgroundColor = "var(--red)"; 
+                            stat_disp.innerText = "Grid is literally coughing smog. 🏭"; 
+                            stat_disp.style.color = "var(--red)"; 
                         }
                     });
                 }
             }
         } catch (err) {
             console.error("[🚨] Static fetch system exception:", err.message);
-            if (valDisplay) valDisplay.innerText = "N/A";
-            if (statusDisplay) { statusDisplay.innerText = "Sync failure on cloud assets 💀"; statusDisplay.style.color = "var(--red)"; }
+            if (val_disp) val_disp.innerText = "N/A";
+            if (stat_disp) { stat_disp.innerText = "Sync failure on cloud assets 💀"; stat_disp.style.color = "var(--red)"; }
         }
     };
 
-    const regionDrop = document.getElementById("regionSelect");
-    if (regionDrop) { 
-        regionDrop.addEventListener("change", (e) => fetchCarbonIntensity(e.target.value)); 
-        fetchCarbonIntensity(regionDrop.value); 
+    const reg_drop = document.getElementById("regionSelect");
+    if (reg_drop) { 
+        reg_drop.addEventListener("change", (e) => fetch_carbon(e.target.value)); 
+        fetch_carbon(reg_drop.value); 
     }
 
-    /* --- SIMULATOR LOGIC --- */
-    const form = document.getElementById("footprintForm");
-    if (form) {
-        form.onsubmit = async (e) => {
+    const ft_form = document.getElementById("footprintForm");
+    if (ft_form) {
+        ft_form.onsubmit = async (e) => {
             e.preventDefault(); 
             
-            // Cleanly parse scores
-            const qIds = ['q1', 'q2', 'q3', 'q4', 'q5'];
-            let summ = qIds.reduce((total, id) => {
-                const el = document.getElementById(id);
-                return total + (el ? parseInt(el.value || 0, 10) : 0);
-            }, 0);
+            // grabbing scores manually bc forms are annoying
+            const q_ids = ['q1', 'q2', 'q3', 'q4', 'q5'];
+            let tot_score = 0;
 
-            // Fire & forget to DB
-            addDoc(collection(database, 'simulatorScores'), { 
-                score: summ, 
+            for (let i = 0; i < q_ids.length; i++) {
+                let el = document.getElementById(q_ids[i]);
+                if (el && el.value) {
+                    tot_score += parseInt(el.value, 10);
+                }
+            }
+
+            // yeet to db
+            addDoc(collection(db, 'simulatorScores'), { 
+                score: tot_score, 
                 date: serverTimestamp() 
             }).catch(err => console.error("[🚨] DB Write Error:", err));
 
             const fb = document.getElementById("feedbackText");
-            let emj = "", col = "", displayScore = summ;
+            let emj = "", col = "", disp_score = tot_score;
 
             // EASTER EGG: Teleportation
-            if (summ < 0) {
-                emj = "🛸"; col = "var(--purple)"; displayScore = "ERROR: 999"; summ = 100;
+            if (tot_score < 0) {
+                emj = "🛸"; col = "var(--purple)"; disp_score = "ERROR: 999"; tot_score = 100;
                 fb.innerText = "🌌 WAIT WHAT. You unlocked alien teleportation technology! Carbon emissions dropped to zero. You solved climate change with sci-fi."; 
                 fb.style.color = "var(--purple)";
-            } else if (summ > 79) {
+            } else if (tot_score > 79) {
                 emj = "🌍"; col = "var(--green)"; 
                 fb.innerText = "🔥 INCREDIBLE! You implemented a true sustainable framework. By shifting to renewables and enforcing a circular economy, we can reach Net-Zero!"; 
                 fb.style.color = "var(--green)";
-            } else if (summ > 39 && summ < 80) {
+            } else if (tot_score > 39 && tot_score < 80) {
                 emj = "⚠️"; col = "var(--yellow)"; 
                 fb.innerText = "🌱 A GOOD START. But half-measures aren't enough. We need systemic shifts in lots of things. Try again!"; 
                 fb.style.color = "var(--yellow)";
@@ -157,47 +165,47 @@ window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('footprintForm').style.display = 'none'; 
             document.getElementById("resultBox").style.display = 'block';
             
-            const scoreDisplay = document.getElementById("scoreText");
-            scoreDisplay.innerText = "0";
+            const score_ui = document.getElementById("scoreText");
+            score_ui.innerText = "0";
 
-            if (displayScore === "ERROR: 999") {
-                scoreDisplay.innerText = displayScore; 
-                scoreDisplay.classList.add("glitch-text");
+            if (disp_score === "ERROR: 999") {
+                score_ui.innerText = disp_score; 
+                score_ui.classList.add("glitch-text");
             } else {
-                // PERFORMANCE FIX: requestAnimationFrame replaces setInterval for ultra-smooth counting
-                let current = 0;
-                const animateScore = () => {
-                    current += Math.max(1, Math.floor(summ / 30)); // Scales speed based on target score
-                    if (current >= summ) {
-                        scoreDisplay.innerText = summ;
+                // rAF > setInterval so the browser doesn't choke
+                let curr = 0;
+                const anim_score = () => {
+                    curr += Math.max(1, Math.floor(tot_score / 30)); 
+                    if (curr >= tot_score) {
+                        score_ui.innerText = tot_score;
                     } else {
-                        scoreDisplay.innerText = current;
-                        requestAnimationFrame(animateScore);
+                        score_ui.innerText = curr;
+                        requestAnimationFrame(anim_score);
                     }
                 };
-                requestAnimationFrame(animateScore);
+                requestAnimationFrame(anim_score);
             }
             
             setTimeout(() => { 
-                const barFill = document.getElementById("barFill");
-                if (barFill) {
-                    barFill.style.width = `${summ}%`; 
-                    barFill.style.backgroundColor = col; 
+                const bar_fill = document.getElementById("barFill");
+                if (bar_fill) {
+                    bar_fill.style.width = `${tot_score}%`; 
+                    bar_fill.style.backgroundColor = col; 
                 }
             }, 150); 
         };
     }
 
-    /* --- MARKETPLACE BOARD (REAL-TIME) --- */
-    const q = query(collection(database, "listedItems"), orderBy("timestamp", "desc"));
+    // fix this later if it scales - doing a raw dump is bad
+    const q = query(collection(db, "listedItems"), orderBy("timestamp", "desc"));
     onSnapshot(q, (snapshot) => {
         const b = document.getElementById('live-board');
         const l = document.getElementById('claimed-list');
         if (!b || !l) return;
 
-        // PERFORMANCE FIX: Build strings first, inject once to prevent DOM layout thrashing
-        let boardHTML = "";
-        let listHTML = "";
+        // build string first, dom thrashing is a sin
+        let b_html = "";
+        let l_html = "";
         let i_c = 0, c_c = 0;
 
         snapshot.forEach((d) => {
@@ -208,10 +216,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
             if (o.status === "claimed") { 
                 c_c++; 
-                listHTML += `<li>✅ <strong>${n1}</strong> was snagged by ${c2}!</li>`; 
+                l_html += `<li>✅ <strong>${n1}</strong> was snagged by ${c2}!</li>`; 
             } else { 
                 i_c++; 
-                boardHTML += `
+                b_html += `
                     <div class='item-card neo-border hover-lift' id='card-${iid}'>
                         <div class='card-icon'>${icon}</div>
                         <h3>${n1}</h3>
@@ -222,12 +230,11 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Update DOM exactly once on animation frame to eliminate layout thrashing
         requestAnimationFrame(() => {
-            b.innerHTML = i_c === 0 ? "<h3 style='width:100%;text-align:center;color:var(--green);' class='blink-text'>No items available right now. Be the first to list something!</h3>" : boardHTML;
-            l.innerHTML = c_c === 0 ? "<li class='empty-state'>No items claimed yet... be the first!</li>" : listHTML;
+            b.innerHTML = i_c === 0 ? "<h3 style='width:100%;text-align:center;color:var(--green);' class='blink-text'>No items available right now. Be the first to list something!</h3>" : b_html;
+            l.innerHTML = c_c === 0 ? "<li class='empty-state'>No items claimed yet... be the first!</li>" : l_html;
 
-            // Gamification Metric
+            // fake gamification math
             const el = document.getElementById('landfillCounter'); 
             if (el) {
                 const co2Saved = (c_c * 4.5).toFixed(1); 
@@ -236,10 +243,9 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* --- ADD ITEM POSTING --- */
-    const addItemForm = document.getElementById('addItemForm');
-    if (addItemForm) {
-        addItemForm.onsubmit = (ev) => {
+    const add_frm = document.getElementById('addItemForm');
+    if (add_frm) {
+        add_frm.onsubmit = (ev) => {
             ev.preventDefault(); 
             const btn = document.querySelector(".post-btn");
             if(!btn) return;
@@ -252,13 +258,13 @@ window.addEventListener('DOMContentLoaded', () => {
             const lst = document.getElementById('newListerName').value;
             const desc = document.getElementById('newItemDesc').value;
 
-            addDoc(collection(database, "listedItems"), { 
+            addDoc(collection(db, "listedItems"), { 
                 name: n, icon: i, lister: lst, description: desc, status: "available", timestamp: serverTimestamp() 
             }).then(() => {
                 if (i === "🛸") alert("Wait, where did you find Alien Tech?! 👽 It's live on the board!"); 
                 else alert("It's live on the board! (unless the wifi blocked it)");
                 
-                addItemForm.reset(); 
+                add_frm.reset(); 
                 btn.innerText = txt;
             }).catch((e) => { 
                 console.error(e); 
@@ -269,7 +275,6 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 }); 
 
-/* --- GLOBAL FUNCTIONS --- */
 window.claimIt = (id) => {
     const un = prompt("♻️ Awesome! Enter your name & class so the owner knows who to give it to:"); 
     if (!un) return; 
@@ -283,7 +288,7 @@ window.claimIt = (id) => {
     }
 
     setTimeout(() => {
-        updateDoc(doc(database, "listedItems", id), { 
+        updateDoc(doc(db, "listedItems", id), { 
             status: "claimed", claimedBy: un 
         }).catch((e) => {
             console.error(e); 
@@ -302,17 +307,17 @@ window.resetQuiz = () => {
     const form = document.getElementById("footprintForm");
     if(form) form.reset();
     
-    const scoreText = document.getElementById("scoreText");
-    if(scoreText) {
-        scoreText.innerText = "0"; 
-        scoreText.className = "glitch-score";
+    const st = document.getElementById("scoreText");
+    if(st) {
+        st.innerText = "0"; 
+        st.className = "glitch-score";
     }
     
-    const barFill = document.getElementById("barFill");
-    if(barFill) barFill.style.width = "0%";
+    const bar = document.getElementById("barFill");
+    if(bar) bar.style.width = "0%";
     
-    const resultBox = document.getElementById("resultBox");
-    if(resultBox) resultBox.style.display = "none";
+    const rb = document.getElementById("resultBox");
+    if(rb) rb.style.display = "none";
     
     if(form) form.style.display = "block"; 
     
