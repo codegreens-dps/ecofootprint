@@ -27,35 +27,35 @@ hi anyone seeing this try konami code it works-->
      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
-<body class="neo_brutalist_theme">
+ <body class="neo_brutalist_theme">
 
     <!--secret button-->
-    <button id="secretbtn" style="opacity: 0.01; position: absolute; top: 5px; left: 5px; cursor: crosshair;" onclick="alert('Bro really clicked the 1% opacity corner button 💀 +5 Hackathon Points.')">.</button>
+     <button id="secretbtn" style="opacity: 0.01; position: absolute; top: 5px; left: 5px; cursor: crosshair;" onclick="alert('+aura for clicking the secret btn')">.</button>
 
-    <!-- flexbox is literally evil i spent 3 hrs crying over this header lol -->
+    <!--the flexbox is so bad-->
     <header class='top-nav neo-box-shadow'>
-        <h2 class="site-logo glitch-hover" data-text="🌿 EcoFootprint" title='Double click for the hackathon special sauce' ondblclick="activateWinnerProtocol()">🌿 EcoFootprint</h2>
-        <nav class="nav-links">
-            <a href="#home" class="brutal-link">Home</a> <a href="#sim" class="brutal-link">Simulator</a> <a href="#board" class="brutal-link">Give & Take</a> <a href="#about" class="brutal-link">About <span class="secret-nav-emoji" style="display:none;">👀</span></a>
-        </nav>
-    </header>
+          <h2 class="site_logo_hover" data-text="🌿 EcoFootprint" title='double click for the secret mode' ondblclick="activateWinnerProtocol()">🌿 EcoFootprint</h2>
+         <nav class="nav-links">
+             <a href="#home" class="brutal-link">Home</a> <a href="#sim" class="brutal-link">Simulator</a> <a href="#board" class="brutal-link">Give & Take</a> <a href="#about" class="brutal-link">About <span class="secret-nav-emoji" style="display:none;">👀</span></a>
+         </nav>
+      </header>
 
-    <!-- yo judges if ur readin this pls give us extra points we sleep deprived-->
+    <!--the hover secret1-->
     <div id="home" class="banner brutal-container">
-        <h1 class="glitch-text" data-text="Policy Simulator & Give & Take Board" title="We stayed up until 3 AM building this mess lol">Policy Simulator & Give & Take Board</h1>
-        <p class="subtitle">Drive systemic climate action. Test global solutions with our Policy Simulator or share Used Resources locally on the Give & Take Board.</p>
-        <!-- dont ask why its big-btn instead of just btn it just works-->
-        <a href="#sim" class='big-btn brutal-btn'>TRY THE SIMULATOR <span class="btn-arrow">→</span></a>
+        <h1 class="glitch-text" data-text="Policy Simulator & Give & Take Board" title="Making this was a nightmare.">Policy Simulator & Give & Take Board</h1>
+          <p class="subtitle">Drive systemic climate action. Test global solutions with our Policy Simulator or share used Resources locally on the Give & Take Board.</p>
+        <!--try sim btn-->
+         <a href="#sim" class='big-btn brutal-btn'>TRY THE SIMULATOR <span class="btn-arrow">→</span></a>
     </div>
 
-    <!-- The Local Carbon Intensity Card sitting pretty right below the banner -->
+    <!--local carbon intensity card-->
     <div class="intensity-section brutal-wrapper">
-        <div class="api-card neo-card" title="Live data pulled from Electricity Maps API... probably">
-            <h3 class="card-header">⚡ Local Grid Intensity</h3>
+        <div class="api-card neo-card" title="Live data fetched from electricity maps API">
+               <h3 class="card-header">Local Grid Intensity</h3>
             <select id="regionSelect" class="brutal-input">
-                <option value="IN">Mainland India (IN)</option> <option value="IN-EA">Eastern India (IN-EA)</option> <option value="IN-NE">North Eastern India (IN-NE)</option>
-                <option value="IN-NO" selected>Northern India (IN-NO)</option> <option value="IN-SO">Southern India (IN-SO)</option> <option value="IN-WE">Western India (IN-WE)</option>
-                <option value="MARS" class="easter-egg-option" disabled>Mars Colony Alpha (Classified)</option>
+                 <option value="IN">Mainland India (IN)</option> <option value="IN-EA">Eastern India (IN-EA)</option> <option value="IN-NE">North Eastern India (IN-NE)</option>
+                  <option value="IN-NO" selected>Northern India (IN-NO)</option> <option value="IN-SO">Southern India (IN-SO)</option> <option value="IN-WE">Western India (IN-WE)</option>
+                <option value="MARS" class="easter-egg-option" disabled>Mars (Classified)</option>
             </select>
             <div id="intensityDisplay" class="intensity-display">
                 <div class="intensity-readout"><span id="intensityValue" class="loading-pulse">Loading...</span> <small class="mono-text">gCO₂eq/kWh</small></div>
