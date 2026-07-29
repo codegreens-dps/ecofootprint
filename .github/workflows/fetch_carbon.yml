@@ -4,8 +4,12 @@ on:
   schedule:
     # Runs automatically every 6 hours (UTC) to refresh the data
     - cron: '0 */6 * * *'
-  # FIX: Removed 'true' and replaced with an empty map '{}' so it is syntactically valid
+  # Replaced 'true' with an empty map '{}' so it is syntactically valid
   workflow_dispatch: {}
+
+# Added permissions so the bot is authorized to push to the repo
+permissions:
+  contents: write
 
 jobs:
   refresh-data:
