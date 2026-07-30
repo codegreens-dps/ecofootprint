@@ -100,30 +100,37 @@ body {
 .test-dt { color: #888 !important; font-size: 0.75rem !important; font-family: monospace; display: block; margin-top: 6px; }
 .stat-ban h3 { font-family: "Orbitron", sans-serif; font-size: 1.15rem; color: #fff; text-transform: uppercase; display: flex; flex-direction: column; gap: 15px; margin-top: 15px; }
 
-/* --- API CARD SECTION --- */
+/* --- API CARD SECTION (FIXED IMAGE BUG) --- */
 .api-card {
     background-color: rgba(10, 10, 10, 0.85); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); 
     border: 2px solid rgba(255, 230, 0, 0.7); border-top: 8px solid var(--yel); 
     padding: clamp(30px, 5vw, 50px) clamp(20px, 6vw, 60px); 
     width: 95%; max-width: 1400px; margin: clamp(30px, 6vw, 60px) auto;
     box-shadow: 0 30px 80px rgba(0,0,0,0.9), 0 0 80px rgba(255,230,0,0.25);
-    border-radius: 12px; /* unrolled this before, but standard border-radius is safer for modern flex */
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(20px, 4vw, 60px); 
+    border-radius: 12px; 
+    /* THIS FIXES THE LAYOUT: specific 2 column setup */
+    display: grid; grid-template-columns: 1fr 1.5fr; grid-template-rows: auto auto; 
+    gap: clamp(15px, 3vw, 30px) clamp(20px, 4vw, 60px); 
     animation: float-inf 5s ease-in-out infinite alternate; cursor: crosshair; position: relative; transform: translateZ(0);
 }
 .api-card::after { content: 'LIVE DATA FEED'; position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: var(--yel); color: black; font-family: 'Orbitron', sans-serif; font-size: clamp(0.8rem, 2vw, 1rem); font-weight: 900; padding: 6px 20px; border-radius: 4px; transition: all 0.3s ease; white-space: nowrap; }
 .api-card:hover { transform: translateY(-10px) scale(1.01); box-shadow: 0 35px 90px rgba(0,0,0,0.95), 0 0 100px rgba(0,255,102,0.4); border-color: rgba(0, 255, 102, 0.8); border-top-color: var(--green); animation: none; z-index: 10; }
 .api-card:hover::after { background: var(--green); box-shadow: 0 0 25px var(--green); content: 'SYSTEM SECURE'; }
-.api-card h3 { text-align: left; align-self: end; font-family: "Orbitron", sans-serif; color: white; font-size: clamp(1.6rem, 4vw, 2.2rem); text-transform: uppercase; font-weight: 800; text-shadow: 0 2px 6px rgba(0,0,0,0.7); line-height: 1.2; }
+
+/* Lock title to Column 1, Top */
+.api-card h3 { grid-column: 1; grid-row: 1; align-self: end; text-align: left; font-family: "Orbitron", sans-serif; color: white; font-size: clamp(1.6rem, 4vw, 2.2rem); text-transform: uppercase; font-weight: 800; text-shadow: 0 2px 6px rgba(0,0,0,0.7); line-height: 1.2; }
 
 .api-card select, .q-wrap select, .new-post-box input, .new-post-box textarea, .new-post-box select { 
     background: rgba(0,0,0,0.9); color: white; padding: clamp(15px, 3vw, 22px); font-family: monospace; font-weight: bold; 
     border-radius: 6px; font-size: clamp(1rem, 2.5vw, 1.3rem); width: 100%; letter-spacing: 1px; outline: none; box-shadow: inset 0 0 20px rgba(0,0,0,1); border: 1px solid rgba(255,255,255,0.3);
 }
-.api-card select { border-color: rgba(255,230,0,0.6); text-align: center; cursor: pointer; }
+
+/* Lock dropdown to Column 1, Bottom */
+.api-card select { grid-column: 1; grid-row: 2; align-self: start; border-color: rgba(255,230,0,0.6); text-align: center; cursor: pointer; }
 .api-card select:focus { border-color: var(--green); box-shadow: 0 0 35px rgba(0,255,102,0.5); }
 
-.int-disp { background: rgba(0,0,0,0.7); border: 2px dashed rgba(255,230,0,0.8); padding: clamp(20px, 4vw, 40px); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,1); display: flex; flex-direction: column; justify-content: center; gap: 20px; height: 100%; }
+/* Lock stat box to Column 2, span both rows */
+.int-disp { grid-column: 2; grid-row: 1 / span 2; height: 100%; background: rgba(0,0,0,0.7); border: 2px dashed rgba(255,230,0,0.8); padding: clamp(20px, 4vw, 40px); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,1); display: flex; flex-direction: column; justify-content: center; gap: 20px; }
 .int-readout { font-family: monospace; color: white; text-align: center; display: flex; align-items: baseline; justify-content: center; gap: 12px; flex-wrap: wrap; }
 #co2-value-label { font-size: clamp(3.5rem, 8vw, 5.5rem); font-weight: 900; color: var(--green); text-shadow: 0 0 35px var(--green); line-height: 1; transition: color 0.5s ease; }
 .mtr-wrap { width: 100%; height: 24px; background-color: #111; border-radius: 12px; overflow: hidden; border: 1px solid #333; box-shadow: inset 0 4px 10px rgba(0,0,0,0.9); margin: 15px 0; }
@@ -242,9 +249,11 @@ footer h2 { font-family: "Orbitron", sans-serif; margin-bottom: 20px; font-size:
 @media (max-width: 768px) {
     .top-nav { flex-direction: column; text-align: center; }
     
-    .api-card { grid-template-columns: 1fr; margin-top: 20px; }
-    .api-card h3 { text-align: center; }
-    .int-disp { margin-top: 15px; }
+    /* FIX: stack the API card grid on mobile */
+    .api-card { grid-template-columns: 1fr; grid-template-rows: auto; margin-top: 20px; }
+    .api-card h3 { grid-column: auto; grid-row: auto; align-self: center; text-align: center; }
+    .api-card select { grid-column: auto; grid-row: auto; }
+    .int-disp { grid-column: auto; grid-row: auto; margin-top: 15px; }
 
     /* Buttons stack nicely */
     .result-actions { flex-direction: column; width: 100%; }
