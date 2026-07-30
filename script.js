@@ -14,7 +14,7 @@ const firebaseKeys = {
 const app = initializeApp(firebaseKeys);
 const db = getFirestore(app);
 
-// XSS protection (hacky but it works)
+//xss protection (hacky but it works)
 const secNode = document.createElement('div');
 function nukeTags(dirtyHtml) {
     if (!dirtyHtml) return "";
