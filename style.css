@@ -12,16 +12,14 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* FIX 1: Targeted transitions only.
-Replaced 'all' with specific properties to prevent layout recalculation thrashing. */
-a, button, input, select, textarea, .info-box, .item-card, .api-card, .claimed-box li, .big-btn, .submit-button, .post-btn, .grab-btn, .btn-retry, .print-btn {
+/* FIX 1: Targeted transitions only. (Removed 'select' to fix dropdown lag) */
+a, button, input, textarea, .info-box, .item-card, .api-card, .claimed-box li, .big-btn, .submit-button, .post-btn, .grab-btn, .btn-retry, .print-btn {
     transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
                 box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
                 background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
                 border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
                 color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background-color: var(--bg-d); 
