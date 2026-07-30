@@ -1,1 +1,1 @@
-{"zone":"IN-EA","carbonIntensity":770,"datetime":"2026-07-30T00:00:00.000Z","updatedAt":"2026-07-29T18:20:24.330Z","createdAt":"2026-07-29T16:19:57.816Z","emissionFactorType":"lifecycle","isEstimated":true,"estimationMethod":"TIME_SLICER_AVERAGE","temporalGranularity":"hourly"}
+{"zone":"IN-EA","carbonIntensity":758,"datetime":"2026-07-30T10:00:00.000Z","updatedAt":"2026-07-30T06:05:44.819Z","createdAt":"2026-07-30T00:19:43.649Z","emissionFactorType":"lifecycle","isEstimated":true,"estimationMethod":"TIME_SLICER_AVERAGE","temporalGranularity":"hourly"}
