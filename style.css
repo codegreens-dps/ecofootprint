@@ -12,7 +12,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* FIX: Targeted transitions only. (Removed 'select' to fix native dropdown lag on iOS/Chrome) */
+/*targeted transitions only cuz of lag*/
 a, button, input, textarea, .info-box, .item-card, .api-card, .claimed-box li, .big-btn, .submit-button, .post-btn, .grab-btn, .btn-retry, .print-btn {
     transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
                 box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
@@ -43,8 +43,7 @@ body {
 ::-webkit-scrollbar-thumb { background: var(--green); border-radius: 10px; border: 3px solid #000; box-shadow: 0 0 15px var(--green); }
 ::-webkit-scrollbar-thumb:hover { background: var(--org); }
 
-/* --- GLOBAL LAYOUT & TYPOGRAPHY --- */
-/* fluid typography ensures texts scales perfectly without media queries snapping */
+/*increaes responsiveness*/
 .main-heading { 
     font-family: "Orbitron", sans-serif; color: white; text-align: center; 
     font-size: clamp(2rem, 5vw, 3.5rem); 
@@ -53,13 +52,11 @@ body {
 }
 .main-heading::after { content: ''; display: block; width: 120px; height: 5px; background: var(--green); margin: 15px auto 0 auto; box-shadow: 0 0 25px var(--green); }
 
-/* section wrappers using fluid padding */
 .threat-wrap, .sim-area, .board-area {
     padding: clamp(60px, 10vw, 120px) 20px;
     position: relative;
 }
 
-/* --- NAVIGATION --- */
 .top-nav { 
     background-color: rgba(2, 5, 2, 0.85); -webkit-backdrop-filter: blur(15px); backdrop-filter: blur(15px); 
     border-bottom: 1px solid rgba(0, 255, 102, 0.6); 
@@ -73,7 +70,6 @@ body {
 .top-nav nav a { color: #ccc; text-decoration: none; font-weight: 700; cursor: pointer; font-size: clamp(0.9rem, 2vw, 1.05rem); letter-spacing: 0.5px; }
 .top-nav nav a:hover { color: var(--green); transform: translateY(-3px); text-shadow: 0 0 20px var(--green); }
 
-/* --- HERO BANNER --- */
 .banner { background-color: #020502; background-image: radial-gradient(circle at 50% 100%, rgba(0, 255, 102, 0.65) 0%, transparent 80%), repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 10px); color: white; text-align: center; padding: clamp(80px, 15vw, 120px) 20px; border-bottom: 2px solid rgba(0,255,102,0.6); box-shadow: inset 0 -50px 100px rgba(0,0,0,1); }
 .banner h1 { font-family: "Orbitron", sans-serif; font-size: clamp(2.5rem, 8vw, 4.8rem); margin-bottom: clamp(15px, 3vw, 30px); color: white; text-shadow: 0 0 50px rgba(0,255,102,1), 0 0 20px rgba(0,255,102,0.8); animation: fadeInUp 0.8s ease-out, float-inf 6s ease-in-out infinite alternate; letter-spacing: -1px; line-height: 1.1; max-width: 1100px; margin-left: auto; margin-right: auto; text-transform: uppercase; will-change: transform; }
 .banner p { font-size: clamp(1.1rem, 3vw, 1.4rem); max-width: 800px; margin: 0 auto clamp(30px, 6vw, 50px) auto; font-weight: 600; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,1); line-height: 1.8; }
@@ -83,7 +79,6 @@ body {
 .big-btn:hover { background-color: var(--green); color: black; transform: translateY(-5px) scale(1.03); box-shadow: 0 15px 50px rgba(0,255,102,0.8), 0 0 40px var(--green); }
 .big-btn:active { transform: translateY(2px) scale(0.98); }
 
-/* --- FLOATING HUDS (z-index is a mess here, fix this later if it scales) --- */
 .carb-float, .stat-ban { 
     position: fixed; background-color: rgba(5, 5, 5, 0.85); -webkit-backdrop-filter: blur(15px); backdrop-filter: blur(15px); 
     padding: clamp(15px, 3vw, 25px); border-radius: 6px; z-index: 9999; transform: translateZ(0); will-change: transform; 
@@ -100,7 +95,6 @@ body {
 .test-dt { color: #888 !important; font-size: 0.75rem !important; font-family: monospace; display: block; margin-top: 6px; }
 .stat-ban h3 { font-family: "Orbitron", sans-serif; font-size: 1.15rem; color: #fff; text-transform: uppercase; display: flex; flex-direction: column; gap: 15px; margin-top: 15px; }
 
-/* --- API CARD SECTION (FIXED IMAGE BUG) --- */
 .api-card {
     background-color: rgba(10, 10, 10, 0.85); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); 
     border: 2px solid rgba(255, 230, 0, 0.7); border-top: 8px solid var(--yel); 
@@ -108,7 +102,6 @@ body {
     width: 95%; max-width: 1400px; margin: clamp(30px, 6vw, 60px) auto;
     box-shadow: 0 30px 80px rgba(0,0,0,0.9), 0 0 80px rgba(255,230,0,0.25);
     border-radius: 12px; 
-    /* THIS FIXES THE LAYOUT: specific 2 column setup */
     display: grid; grid-template-columns: 1fr 1.5fr; grid-template-rows: auto auto; 
     gap: clamp(15px, 3vw, 30px) clamp(20px, 4vw, 60px); 
     animation: float-inf 5s ease-in-out infinite alternate; cursor: crosshair; position: relative; transform: translateZ(0);
@@ -117,7 +110,6 @@ body {
 .api-card:hover { transform: translateY(-10px) scale(1.01); box-shadow: 0 35px 90px rgba(0,0,0,0.95), 0 0 100px rgba(0,255,102,0.4); border-color: rgba(0, 255, 102, 0.8); border-top-color: var(--green); animation: none; z-index: 10; }
 .api-card:hover::after { background: var(--green); box-shadow: 0 0 25px var(--green); content: 'SYSTEM SECURE'; }
 
-/* Lock title to Column 1, Top */
 .api-card h3 { grid-column: 1; grid-row: 1; align-self: end; text-align: left; font-family: "Orbitron", sans-serif; color: white; font-size: clamp(1.6rem, 4vw, 2.2rem); text-transform: uppercase; font-weight: 800; text-shadow: 0 2px 6px rgba(0,0,0,0.7); line-height: 1.2; }
 
 .api-card select, .q-wrap select, .new-post-box input, .new-post-box textarea, .new-post-box select { 
@@ -125,22 +117,17 @@ body {
     border-radius: 6px; font-size: clamp(1rem, 2.5vw, 1.3rem); width: 100%; letter-spacing: 1px; outline: none; box-shadow: inset 0 0 20px rgba(0,0,0,1); border: 1px solid rgba(255,255,255,0.3);
 }
 
-/* Lock dropdown to Column 1, Bottom */
 .api-card select { grid-column: 1; grid-row: 2; align-self: start; border-color: rgba(255,230,0,0.6); text-align: center; cursor: pointer; }
 .api-card select:focus { border-color: var(--green); box-shadow: 0 0 35px rgba(0,255,102,0.5); }
 
-/* Lock stat box to Column 2, span both rows */
 .int-disp { grid-column: 2; grid-row: 1 / span 2; height: 100%; background: rgba(0,0,0,0.7); border: 2px dashed rgba(255,230,0,0.8); padding: clamp(20px, 4vw, 40px); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,1); display: flex; flex-direction: column; justify-content: center; gap: 20px; }
 .int-readout { font-family: monospace; color: white; text-align: center; display: flex; align-items: baseline; justify-content: center; gap: 12px; flex-wrap: wrap; }
 #co2-value-label { font-size: clamp(3.5rem, 8vw, 5.5rem); font-weight: 900; color: var(--green); text-shadow: 0 0 35px var(--green); line-height: 1; transition: color 0.5s ease; }
 .mtr-wrap { width: 100%; height: 24px; background-color: #111; border-radius: 12px; overflow: hidden; border: 1px solid #333; box-shadow: inset 0 4px 10px rgba(0,0,0,0.9); margin: 15px 0; }
 .mtr-fill { height: 100%; width: 0%; background-color: var(--green); transition: width 1.5s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 1s ease; box-shadow: 0 0 30px currentColor; border-right: 4px solid rgba(255,255,255,0.9); }
 .int-stat { font-size: clamp(1rem, 2.5vw, 1.4rem); font-family: "Orbitron", sans-serif; font-weight: 700; text-align: center; text-transform: uppercase; letter-spacing: 2px; }
-
-/* --- CORE CLIMATE THREATS (CARDS) --- */
 .threat-wrap { background-color: #0d0300; background-image: radial-gradient(circle at center, rgba(255, 60, 0, 0.35) 0%, transparent 85%), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 50px); box-shadow: inset 0 20px 80px rgba(0,0,0,1); }
 #secretbtn { position: fixed; top: 5px; left: 5px; opacity: 0.01; z-index: 1000000; width: 20px; height: 20px; border: none; background: transparent; cursor: crosshair; }
-
 .flex-boxes { display: flex; justify-content: center; align-items: stretch; gap: clamp(20px, 4vw, 40px); flex-wrap: wrap; max-width: 1300px; margin: 0 auto; }
 .info-box, .item-card { 
     display: flex; flex-direction: column; align-items: center; 
@@ -151,64 +138,50 @@ body {
 }
 .info-box { border: 1px solid rgba(255,60,0,0.25); border-top: 4px solid var(--org); }
 .item-card { border: 1px solid rgba(0,255,102,0.25); border-top: 4px solid var(--green); text-align: left; align-items: flex-start; }
-
 .info-box::before, .item-card::before { content: ''; position: absolute; inset: 0; bottom: -15px; pointer-events: auto; }
 .info-box::before { background: linear-gradient(180deg, rgba(255,60,0,0.15) 0%, transparent 100%); }
 .item-card::before { background: linear-gradient(180deg, rgba(0,255,102,0.12) 0%, transparent 100%); }
-
 .info-box:hover { transform: translateY(-15px); box-shadow: 0 30px 60px rgba(0,0,0,0.95), 0 0 50px rgba(255,60,0,0.45); border-color: rgba(255,60,0,0.8); border-top-color: var(--org); z-index: 10; }
 .item-card:hover { transform: translateY(-15px); box-shadow: 0 30px 60px rgba(0,0,0,0.95), 0 0 50px rgba(0,255,102,0.35); border-color: rgba(0,255,102,0.8); border-top-color: var(--green); z-index: 10; }
-
 .info-box h3, .item-card h3 { font-family: "Orbitron", sans-serif; margin-bottom: 20px; color: white; font-size: clamp(1.3rem, 3.5vw, 1.6rem); text-transform: uppercase; font-weight: 800; text-shadow: 0 2px 6px rgba(0,0,0,0.9); }
 .box-emoji, .card-icon { font-size: clamp(3.5rem, 8vw, 4.5rem); margin-bottom: 25px; display: inline-block; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.9)); transition: transform 0.5s ease; }
 .info-box:hover .box-emoji { transform: scale(1.2) translateY(-10px); filter: drop-shadow(0 0 35px rgba(255,60,0,1)); }
 .item-card p { font-weight: 500; font-size: 1.15rem; color: #ddd; margin-bottom: 35px; }
-
-/* --- SIMULATOR & FORMS --- */
 .sim-area { background-color: #000a05; background-image: repeating-linear-gradient(45deg, rgba(0, 255, 102, 0.08) 0px, rgba(0, 255, 102, 0.08) 2px, transparent 2px, transparent 30px), repeating-linear-gradient(-45deg, rgba(0, 255, 102, 0.08) 0px, rgba(0, 255, 102, 0.08) 2px, transparent 2px, transparent 30px), radial-gradient(circle at 50% 50%, rgba(0,255,102,0.15) 0%, #000 100%); animation: panGrid 30s linear infinite; box-shadow: inset 0 0 120px rgba(0,0,0,1); border-top: 2px solid rgba(0,255,102,0.6); border-bottom: 2px solid rgba(0,255,102,0.6); }
 .sim-area .main-heading { color: white; text-shadow: 0 0 35px rgba(0,255,102,0.9); }
 .sim-area .main-heading::after { background: var(--org); box-shadow: 0 0 25px var(--org); }
-
 .quiz-box, .new-post-box { 
     max-width: 700px; margin: 0 auto; background-color: var(--cd-dark); -webkit-backdrop-filter: blur(15px); backdrop-filter: blur(15px); 
     padding: clamp(30px, 6vw, 60px) clamp(20px, 5vw, 50px); 
-    border: 1px solid rgba(0,255,102,0.6); box-shadow: 0 25px 60px rgba(0,0,0,0.95), 0 0 60px rgba(0,255,102,0.25); border-radius: 8px; transform: translateZ(0); 
-}
+    border: 1px solid rgba(0,255,102,0.6); box-shadow: 0 25px 60px rgba(0,0,0,0.95), 0 0 60px rgba(0,255,102,0.25); border-radius: 8px; transform: translateZ(0); }
 .quiz-box { border-top: 6px solid var(--green); }
 .new-post-box { border-top: 6px solid var(--yel); border-color: rgba(255,230,0,0.6); margin-bottom: 70px; }
-
 .q-wrap { margin-bottom: 35px; }
 .q-wrap label { font-weight: 800; font-size: clamp(1.1rem, 2.5vw, 1.2rem); display: block; margin-bottom: 15px; color: white; text-shadow: 0 2px 6px rgba(0,0,0,0.9); }
 .q-wrap select { appearance: none; cursor: pointer; }
 .q-wrap select:focus { border-color: var(--green); box-shadow: 0 0 30px rgba(0,255,102,0.5), inset 0 0 15px rgba(0,0,0,0.9); }
-
 .submit-button, .post-btn { max-width: 100%; margin-top: 30px; }
 .submit-button { color: var(--org); border-color: var(--org); box-shadow: 0 0 30px rgba(255,60,0,0.35), inset 0 0 20px rgba(255,60,0,0.25); }
 .submit-button:hover { background-color: var(--org); box-shadow: 0 15px 50px rgba(255,60,0,0.6), 0 0 35px var(--org); }
-
-/* --- DOSSIER PANEL --- */
 .end-screen { margin-top: 40px; padding: clamp(30px, 6vw, 50px); border: 2px solid var(--yel); background-color: rgba(0,0,0,0.85); background-image: repeating-radial-gradient(circle at center, transparent 0, transparent 20px, rgba(255, 230, 0, 0.08) 20px, rgba(255, 230, 0, 0.08) 40px); box-shadow: inset 0 0 40px rgba(0,0,0,1), 0 0 50px rgba(255,230,0,0.25); border-radius: 8px; animation: fadeInUp 0.6s ease-out; text-align: center; }
 .big-emoji { font-size: clamp(60px, 12vw, 80px); margin-bottom: 20px; animation: pulse 2s infinite; filter: drop-shadow(0 0 35px rgba(255,230,0,0.9)); line-height: 1; }
 .end-screen h3 { font-size: clamp(1.5rem, 4vw, 2rem); margin-bottom: 25px; font-family: "Orbitron", sans-serif; text-transform: uppercase; }
 .bar-background { width: 100%; height: 30px; border: 2px solid rgba(255,255,255,0.4); background-color: #111; margin: 30px 0; border-radius: 15px; box-shadow: inset 0 5px 15px rgba(0,0,0,0.9); }
 .bar-color { height: 100%; width: 0%; background-color: var(--green); transition: width 1.5s ease-out; background-image: linear-gradient(45deg, rgba(0,0,0,0.35) 25%, transparent 25%, transparent 50%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.35) 75%, transparent 75%, transparent); background-size: 40px 40px; box-shadow: inset 0 0 25px rgba(255,255,255,0.6); animation: moveStripes 1s linear infinite; }
 .result-actions { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 35px; }
-
-/* --- GIVE & TAKE BOARD --- */
 .board-area { background-color: #0a0900; background-image: linear-gradient(rgba(255, 230, 0, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 230, 0, 0.1) 1px, transparent 1px), radial-gradient(circle at center, transparent 20%, #000 100%); background-size: 30px 30px, 30px 30px, 100% 100%; box-shadow: inset 0 20px 80px rgba(0,0,0,1); }
 .board-area .main-heading { text-shadow: 0 0 35px rgba(255,230,0,0.8); }
 .board-area .main-heading::after { background: var(--yel); box-shadow: 0 0 25px var(--yel); }
 .sub-text { text-align: center; max-width: 800px; margin: -40px auto 60px auto; font-size: clamp(1.1rem, 3vw, 1.3rem); font-weight: 500; color: #ccc; line-height: 1.6; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 .new-post-box h3 { margin-bottom: 30px; font-size: clamp(1.8rem, 4vw, 2.2rem); }
-
-/* flexbox was being weird here, letting inputs scale down */
+/*flexbox was being weird here, letting inputs scale down   */
 .flex-inputs { display: flex; gap: clamp(15px, 3vw, 25px); margin-bottom: 25px; width: 100%; flex-wrap: wrap; }
 .flex-inputs input, .flex-inputs select { flex: 1 1 min(100%, 250px); margin-bottom: 0; }
-
 .new-post-box input:focus, .new-post-box textarea:focus { border-color: var(--yel); box-shadow: 0 0 35px rgba(255,230,0,0.4), inset 0 0 20px rgba(0,0,0,0.9); transform: translateY(-2px); }
 .new-post-box select:focus { border-color: var(--yel); box-shadow: 0 0 35px rgba(255,230,0,0.4), inset 0 0 20px rgba(0,0,0,0.9); }
 .post-btn { color: var(--yel); border-color: var(--yel); box-shadow: 0 0 35px rgba(255,230,0,0.25), inset 0 0 25px rgba(255,230,0,0.25); }
 .post-btn:hover { background-color: var(--yel); box-shadow: 0 15px 50px rgba(255,230,0,0.5), 0 0 35px var(--yel); }
+
 
 .claimed-box { max-width: 700px; margin: 70px auto 20px auto; border: 1px solid rgba(255,60,0,0.6); border-left: 8px solid var(--org); background: rgba(10,10,10,0.85); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); padding: clamp(25px, 5vw, 40px); box-shadow: 0 25px 60px rgba(0,0,0,0.95), 0 0 30px rgba(255,60,0,0.15); border-radius: 8px; }
 .claimed-box summary { cursor: pointer; font-family: "Orbitron", sans-serif; font-weight: 800; font-size: clamp(1.2rem, 3.5vw, 1.6rem); color: white; list-style: none; text-transform: uppercase; text-shadow: 0 0 15px rgba(255,60,0,0.5); }
@@ -216,7 +189,6 @@ body {
 .claimed-box ul { margin-top: 30px; list-style-type: none; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 30px; display: flex; flex-direction: column; gap: 15px; }
 .claimed-box li { font-family: monospace; font-size: clamp(0.9rem, 2.5vw, 1.15rem); font-weight: 600; background: rgba(0,0,0,0.7); color: #ccc; padding: 20px; border: 1px solid rgba(255,255,255,0.1); border-left: 4px solid var(--org); border-radius: 4px; box-shadow: inset 0 0 15px rgba(0,0,0,1); transition: all 0.3s ease; }
 .claimed-box li:hover { transform: translateX(15px); border-color: rgba(0,255,102,0.8); border-left-color: var(--green); border-left-width: 6px; color: white; background: #000; padding-left: 35px; }
-
 .grab-btn { margin-top: auto; background-color: transparent; color: var(--green); font-weight: 800; border: 2px solid var(--green); padding: 18px; font-size: 1.2rem; cursor: pointer; text-transform: uppercase; font-family: 'Orbitron', sans-serif; border-radius: 4px; box-shadow: inset 0 0 15px rgba(0,255,102,0.2); width: 100%; }
 .grab-btn:hover:not(:disabled) { background-color: var(--green); color: black; transform: translateY(-5px); box-shadow: 0 10px 35px rgba(0,255,102,0.5), 0 0 25px var(--green); }
 .grab-btn:disabled { background-color: rgba(255,255,255,0.05); color: #555; border-color: #333; box-shadow: none; cursor: not-allowed; }
@@ -231,41 +203,28 @@ body {
 @keyframes glowPulse { 0%, 100% { box-shadow: 0 0 20px rgba(0,255,102,0.6); } 50% { box-shadow: 0 0 50px rgba(0,255,102,1), 0 0 25px var(--green); } }
 @keyframes pulseMode { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 @keyframes flashColors { 0% { filter: hue-rotate(0deg); } 50% { filter: hue-rotate(180deg); } 100% { filter: hue-rotate(360deg); } }
-
-/* --- FOOTER --- */
 footer { background-color: #020502; background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 102, 0.2) 2px, rgba(0, 255, 102, 0.2) 4px); color: white; text-align: center; padding: clamp(50px, 8vw, 80px) 20px; border-top: 2px solid rgba(0,255,102,0.7); box-shadow: 0 -25px 80px rgba(0,0,0,1); }
 footer h2 { font-family: "Orbitron", sans-serif; margin-bottom: 20px; font-size: clamp(1.8rem, 5vw, 2.5rem); text-transform: uppercase; text-shadow: 0 0 35px rgba(0,255,102,1); }
 
-/* --- RESPONSIVE BREAKPOINTS --- */
-
-/* Laptops / Tablets */
 @media (max-width: 1024px) {
-    /* Release HUDs from fixed positions so they don't overlap content on smaller screens */
+    /*release huds from fixed positions so they don't overlap content*/
     .carb-float, .stat-ban { position: relative; bottom: auto; left: auto; right: auto; width: 100%; max-width: 450px; margin: 40px auto; animation: none; box-shadow: 0 15px 35px rgba(0,0,0,0.9); }
     .carb-float { flex-direction: column; text-align: center; padding: 30px; }
 }
 
-/* Mobile Devices */
 @media (max-width: 768px) {
     .top-nav { flex-direction: column; text-align: center; }
     
-    /* FIX: stack the API card grid on mobile */
+    /*stack the API card grid on mobile*/
     .api-card { grid-template-columns: 1fr; grid-template-rows: auto; margin-top: 20px; }
     .api-card h3 { grid-column: auto; grid-row: auto; align-self: center; text-align: center; }
     .api-card select { grid-column: auto; grid-row: auto; }
     .int-disp { grid-column: auto; grid-row: auto; margin-top: 15px; }
-
-    /* Buttons stack nicely */
     .result-actions { flex-direction: column; width: 100%; }
     .btn-retry, .print-btn { width: 100%; }
 }
-
-/* Very Small Devices (iPhone SE, etc) */
 @media (max-width: 480px) {
-    /* Inputs inside forms stack completely */
     .flex-inputs input, .flex-inputs select { flex: 1 1 100%; }
-    
-    /* Make cards fit completely without horizontal scroll */
     .info-box, .item-card { border-radius: 4px; padding: 25px 15px; }
     
     .board-grid, .flex-boxes { gap: 20px; }
@@ -273,8 +232,6 @@ footer h2 { font-family: "Orbitron", sans-serif; margin-bottom: 20px; font-size:
 
 .winner-mode { animation: flashColors 0.5s infinite; }
 .victory-banner { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.9); z-index: 999999; text-align: center; pointer-events: none; }
-
-/* --- PRINT STYLES --- */
 @media print {
     @page { size: letter portrait; margin: 0.5in; }
     html, body { height: 100vh !important; overflow: hidden !important; margin: 0 !important; padding: 0 !important; background: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
