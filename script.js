@@ -81,15 +81,15 @@ async function pingElectricityMaps(regionCode) {
 
                 if (emissions < 250) {
                     barUi.style.backgroundColor = "var(--green)";
-                    statusMsg.innerText = "Grid is looking clean today! 🌿";
+                    statusMsg.innerText = "Grid is looking clean today!";
                     statusMsg.style.color = "var(--green)";
                 } else if (emissions < 550) {
                     barUi.style.backgroundColor = "var(--yellow)";
-                    statusMsg.innerText = "Moderate emissions. Meh. 🤷‍♂️";
+                    statusMsg.innerText = "Moderate emissions.";
                     statusMsg.style.color = "var(--yellow)";
                 } else {
                     barUi.style.backgroundColor = "var(--red)";
-                    statusMsg.innerText = "Grid is literally coughing smog. 🏭";
+                    statusMsg.innerText = "Grid is literally coughing smog.";
                     statusMsg.style.color = "var(--red)";
                 }
             });
