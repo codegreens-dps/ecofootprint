@@ -176,6 +176,9 @@ body {
 .new-post-box h3 { margin-bottom: 30px; font-size: clamp(1.8rem, 4vw, 2.2rem); }
 /*flexbox was being weird here, letting inputs scale down   */
 .flex-inputs { display: flex; gap: clamp(15px, 3vw, 25px); margin-bottom: 40px; width: 100%; flex-wrap: wrap; }
+.new-post-box textarea {
+    margin-top: clamp(20px, 4vw, 40px);
+}
 .flex-inputs input, .flex-inputs select { flex: 1 1 min(100%, 250px); margin-bottom: 0; }
 .new-post-box input:focus, .new-post-box textarea:focus { border-color: var(--yel); box-shadow: 0 0 35px rgba(255,230,0,0.4), inset 0 0 20px rgba(0,0,0,0.9); transform: translateY(-2px); }
 .new-post-box select:focus { border-color: var(--yel); box-shadow: 0 0 35px rgba(255,230,0,0.4), inset 0 0 20px rgba(0,0,0,0.9); }
